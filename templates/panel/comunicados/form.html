@@ -1,0 +1,108 @@
+{% extends "panel/base_panel.html" %}
+{% block title %}{{ titulo_pagina }}{% endblock %}
+
+{% block content %}
+<div style="margin-bottom:1rem;">
+    <a href="{% url 'panel:comunicados_list' %}" class="btn-p-gris btn-p-sm">
+        <i class="bi bi-arrow-left"></i>Volver a Comunicados
+    </a>
+</div>
+
+<div class="p-card">
+    <div class="p-card-header">
+        <h1 class="p-card-title"><i class="bi bi-megaphone me-2" style="color:#1565C0;"></i>{{ titulo_pagina }}</h1>
+    </div>
+    <div class="p-card-body">
+        <form method="post" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+
+            {% if form.errors %}
+                <div class="p-alert p-alert-error">
+                    <i class="bi bi-exclamation-circle"></i>
+                    Por favor corrija los campos marcados antes de guardar.
+                </div>
+            {% endif %}
+
+            <!-- Titulo -->
+            <div style="margin-bottom:1.4rem;">
+                <label class="p-label" for="{{ form.titulo.id_for_label }}">
+                    {{ form.titulo.label }} <span style="color:#C62828;">*</span>
+                </label>
+                {{ form.titulo }}
+                {% if form.titulo.errors %}<div style="color:#C62828;font-size:0.88rem;margin-top:0.3rem;">{{ form.titulo.errors.0 }}</div>{% endif %}
+            </div>
+
+            <!-- Categoria -->
+            <div style="margin-bottom:1.4rem;">
+                <label class="p-label" for="{{ form.categoria.id_for_label }}">{{ form.categoria.label }}</label>
+                {{ form.categoria }}
+            </div>
+
+            <!-- Extracto -->
+            <div style="margin-bottom:1.4rem;">
+                <label class="p-label" for="{{ form.extracto.id_for_label }}">
+                    {{ form.extracto.label }} <span style="color:#C62828;">*</span>
+                </label>
+                {{ form.extracto }}
+                <div class="p-help">{{ form.extracto.help_text }}</div>
+                {% if form.extracto.errors %}<div style="color:#C62828;font-size:0.88rem;margin-top:0.3rem;">{{ form.extracto.errors.0 }}</div>{% endif %}
+            </div>
+
+            <!-- Contenido -->
+            <div style="margin-bottom:1.4rem;">
+                <label class="p-label" for="{{ form.contenido.id_for_label }}">{{ form.contenido.label }} <span style="color:#C62828;">*</span></label>
+                {{ form.contenido }}
+                {% if form.contenido.errors %}<div style="color:#C62828;font-size:0.88rem;margin-top:0.3rem;">{{ form.contenido.errors.0 }}</div>{% endif %}
+            </div>
+
+            <!-- Imagen -->
+            <div style="margin-bottom:1.4rem;">
+                <label class="p-label">{{ form.imagen.label }}</label>
+                {{ form.imagen }}
+                <div class="p-help">{{ form.imagen.help_text }}</div>
+            </div>
+
+            <!-- Fecha -->
+            <div style="margin-bottom:1.4rem;">
+                <label class="p-label" for="{{ form.fecha_publicacion.id_for_label }}">{{ form.fecha_publicacion.label }}</label>
+                {{ form.fecha_publicacion }}
+            </div>
+
+            <!-- Checkboxes -->
+            <div style="background:#F5F7FA;border-radius:10px;padding:1.25rem 1.5rem;margin-bottom:1.75rem;">
+                <div style="font-family:'Montserrat',sans-serif;font-weight:700;margin-bottom:1rem;color:#263238;">Opciones de publicacion</div>
+                <div style="display:flex;flex-direction:column;gap:0.85rem;">
+                    <label style="display:flex;align-items:flex-start;gap:0.75rem;cursor:pointer;">
+                        <input type="checkbox" name="{{ form.publicado.html_name }}" id="{{ form.publicado.id_for_label }}"
+                               class="form-check-input" style="width:22px;height:22px;margin-top:2px;flex-shrink:0;"
+                               {% if form.publicado.value %}checked{% endif %}>
+                        <div>
+                            <div style="font-weight:600;">{{ form.publicado.label }}</div>
+                            <div class="p-help">{{ form.publicado.help_text }}</div>
+                        </div>
+                    </label>
+                    <label style="display:flex;align-items:flex-start;gap:0.75rem;cursor:pointer;">
+                        <input type="checkbox" name="{{ form.destacado.html_name }}" id="{{ form.destacado.id_for_label }}"
+                               class="form-check-input" style="width:22px;height:22px;margin-top:2px;flex-shrink:0;"
+                               {% if form.destacado.value %}checked{% endif %}>
+                        <div>
+                            <div style="font-weight:600;">{{ form.destacado.label }}</div>
+                            <div class="p-help">{{ form.destacado.help_text }}</div>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Acciones -->
+            <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
+                <button type="submit" class="btn-p-verde">
+                    <i class="bi bi-check-lg"></i>{{ accion }}
+                </button>
+                <a href="{% url 'panel:comunicados_list' %}" class="btn-p-gris">
+                    <i class="bi bi-x-lg"></i>Cancelar
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -15,6 +15,7 @@ urlpatterns = [
     path("beneficios/", include("apps.beneficios.urls")),
     path("contacto/", include("apps.contacto.urls")),
     path("capacitacion/", include("apps.capacitacion.urls", namespace="capacitacion")),
+    path("panel/", include("apps.panel.urls", namespace="panel")),
 ]
 
 if settings.DEBUG:

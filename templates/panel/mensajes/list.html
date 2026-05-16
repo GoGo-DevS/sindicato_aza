@@ -1,0 +1,68 @@
+{% extends "panel/base_panel.html" %}
+{% block title %}Mensajes de contacto{% endblock %}
+
+{% block content %}
+<div class="p-card">
+    <div class="p-card-header">
+        <h1 class="p-card-title">
+            <i class="bi bi-envelope me-2" style="color:#1565C0;"></i>Mensajes de contacto
+        </h1>
+        {% if mensajes_sin_leer %}
+            <span style="background:#C62828;color:#fff;border-radius:50px;padding:0.3em 0.9em;font-family:'Montserrat',sans-serif;font-weight:700;font-size:0.85rem;">
+                {{ mensajes_sin_leer }} sin leer
+            </span>
+        {% endif %}
+    </div>
+    <div style="overflow-x:auto;">
+        {% if mensajes %}
+        <table class="p-table">
+            <thead>
+                <tr>
+                    <th>Remitente</th>
+                    <th>Asunto</th>
+                    <th>Fecha</th>
+                    <th>Estado</th>
+                    <th>Accion</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for m in mensajes %}
+                <tr {% if not m.leido %}class="fila-no-leida"{% endif %}>
+                    <td>
+                        <strong>{{ m.nombre }}</strong>
+                        <br><span style="font-size:0.85rem;color:#546E7A;">{{ m.email }}</span>
+                    </td>
+                    <td style="max-width:280px;">
+                        {{ m.asunto }}
+                        {% if not m.leido %}
+                            <span class="badge-nuevo" style="margin-left:0.35rem;">Nuevo</span>
+                        {% endif %}
+                    </td>
+                    <td style="white-space:nowrap;color:#546E7A;">{{ m.created_at|date:"d/m/Y H:i" }}</td>
+                    <td>
+                        {% if m.respondido %}
+                            <span class="badge-si"><i class="bi bi-check2-all"></i> Respondido</span>
+                        {% elif m.leido %}
+                            <span style="color:#546E7A;font-size:0.9rem;">Leido</span>
+                        {% else %}
+                            <span class="badge-nuevo">Sin leer</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{% url 'panel:mensaje_detail' m.pk %}" class="btn-p-azul btn-p-sm">
+                            <i class="bi bi-eye"></i>Ver mensaje
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="p-empty">
+            <i class="bi bi-inbox"></i>
+            No hay mensajes recibidos aun.
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

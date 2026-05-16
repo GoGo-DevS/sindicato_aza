@@ -1,0 +1,70 @@
+{% extends "panel/base_panel.html" %}
+{% block title %}Comunicados{% endblock %}
+
+{% block content %}
+<div class="p-card">
+    <div class="p-card-header">
+        <h1 class="p-card-title"><i class="bi bi-megaphone me-2" style="color:#1565C0;"></i>Comunicados</h1>
+        <a href="{% url 'panel:comunicados_create' %}" class="btn-p-verde">
+            <i class="bi bi-plus-lg"></i>Nuevo comunicado
+        </a>
+    </div>
+    <div style="overflow-x:auto;">
+        {% if comunicados %}
+        <table class="p-table">
+            <thead>
+                <tr>
+                    <th>Titulo</th>
+                    <th>Categoria</th>
+                    <th>Publicado</th>
+                    <th>Destacado</th>
+                    <th>Fecha</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in comunicados %}
+                <tr>
+                    <td style="max-width:320px;">
+                        <strong>{{ c.titulo }}</strong>
+                    </td>
+                    <td>{{ c.categoria }}</td>
+                    <td>
+                        {% if c.publicado %}
+                            <span class="badge-si"><i class="bi bi-check2"></i> Si</span>
+                        {% else %}
+                            <span class="badge-no">Borrador</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if c.destacado %}
+                            <span class="badge-si">Si</span>
+                        {% else %}
+                            <span style="color:#90A4AE;">No</span>
+                        {% endif %}
+                    </td>
+                    <td style="white-space:nowrap;color:#546E7A;">{{ c.fecha_publicacion|date:"d/m/Y" }}</td>
+                    <td class="acciones">
+                        <a href="{% url 'panel:comunicados_edit' c.pk %}" class="btn-p-azul btn-p-sm">
+                            <i class="bi bi-pencil"></i>Editar
+                        </a>
+                        <a href="{% url 'panel:comunicados_delete' c.pk %}" class="btn-p-rojo btn-p-sm" style="margin-left:0.4rem;">
+                            <i class="bi bi-trash3"></i>Eliminar
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="p-empty">
+            <i class="bi bi-megaphone"></i>
+            Aun no hay comunicados.<br>
+            <a href="{% url 'panel:comunicados_create' %}" class="btn-p-verde" style="margin-top:1rem;display:inline-flex;">
+                <i class="bi bi-plus-lg"></i>Crear el primero
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

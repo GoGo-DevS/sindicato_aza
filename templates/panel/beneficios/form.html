@@ -1,0 +1,95 @@
+{% extends "panel/base_panel.html" %}
+{% block title %}{{ titulo_pagina }}{% endblock %}
+
+{% block content %}
+<div style="margin-bottom:1rem;">
+    <a href="{% url 'panel:beneficios_list' %}" class="btn-p-gris btn-p-sm">
+        <i class="bi bi-arrow-left"></i>Volver a Beneficios
+    </a>
+</div>
+
+<div class="p-card">
+    <div class="p-card-header">
+        <h1 class="p-card-title"><i class="bi bi-gift me-2" style="color:#FF6F00;"></i>{{ titulo_pagina }}</h1>
+    </div>
+    <div class="p-card-body">
+        <form method="post" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+
+            {% if form.errors %}
+                <div class="p-alert p-alert-error">
+                    <i class="bi bi-exclamation-circle"></i>
+                    Por favor corrija los campos marcados antes de guardar.
+                </div>
+            {% endif %}
+
+            <div style="margin-bottom:1.4rem;">
+                <label class="p-label">{{ form.titulo.label }} <span style="color:#C62828;">*</span></label>
+                {{ form.titulo }}
+                {% if form.titulo.errors %}<div style="color:#C62828;font-size:0.88rem;margin-top:0.3rem;">{{ form.titulo.errors.0 }}</div>{% endif %}
+            </div>
+
+            <div style="margin-bottom:1.4rem;">
+                <label class="p-label">{{ form.categoria.label }}</label>
+                {{ form.categoria }}
+            </div>
+
+            <div style="margin-bottom:1.4rem;">
+                <label class="p-label">{{ form.descripcion_corta.label }} <span style="color:#C62828;">*</span></label>
+                {{ form.descripcion_corta }}
+                <div class="p-help">{{ form.descripcion_corta.help_text }}</div>
+                {% if form.descripcion_corta.errors %}<div style="color:#C62828;font-size:0.88rem;margin-top:0.3rem;">{{ form.descripcion_corta.errors.0 }}</div>{% endif %}
+            </div>
+
+            <div style="margin-bottom:1.4rem;">
+                <label class="p-label">{{ form.contenido.label }}</label>
+                {{ form.contenido }}
+            </div>
+
+            <div style="margin-bottom:1.4rem;">
+                <label class="p-label">{{ form.imagen.label }}</label>
+                {{ form.imagen }}
+            </div>
+
+            <div style="margin-bottom:1.4rem;">
+                <label class="p-label">{{ form.vigencia.label }}</label>
+                {{ form.vigencia }}
+                <div class="p-help">Fecha hasta la cual este beneficio estara disponible.</div>
+            </div>
+
+            <div style="background:#F5F7FA;border-radius:10px;padding:1.25rem 1.5rem;margin-bottom:1.75rem;">
+                <div style="font-family:'Montserrat',sans-serif;font-weight:700;margin-bottom:1rem;color:#263238;">Opciones de visibilidad</div>
+                <div style="display:flex;flex-direction:column;gap:0.85rem;">
+                    <label style="display:flex;align-items:flex-start;gap:0.75rem;cursor:pointer;">
+                        <input type="checkbox" name="{{ form.activo.html_name }}" id="{{ form.activo.id_for_label }}"
+                               class="form-check-input" style="width:22px;height:22px;margin-top:2px;flex-shrink:0;"
+                               {% if form.activo.value %}checked{% endif %}>
+                        <div>
+                            <div style="font-weight:600;">{{ form.activo.label }}</div>
+                            <div class="p-help">{{ form.activo.help_text }}</div>
+                        </div>
+                    </label>
+                    <label style="display:flex;align-items:flex-start;gap:0.75rem;cursor:pointer;">
+                        <input type="checkbox" name="{{ form.destacado.html_name }}" id="{{ form.destacado.id_for_label }}"
+                               class="form-check-input" style="width:22px;height:22px;margin-top:2px;flex-shrink:0;"
+                               {% if form.destacado.value %}checked{% endif %}>
+                        <div>
+                            <div style="font-weight:600;">{{ form.destacado.label }}</div>
+                            <div class="p-help">{{ form.destacado.help_text }}</div>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
+                <button type="submit" class="btn-p-verde">
+                    <i class="bi bi-check-lg"></i>{{ accion }}
+                </button>
+                <a href="{% url 'panel:beneficios_list' %}" class="btn-p-gris">
+                    <i class="bi bi-x-lg"></i>Cancelar
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

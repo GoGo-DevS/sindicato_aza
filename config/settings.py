@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "apps.contacto",
     "apps.accounts",
     "apps.capacitacion",
+    "apps.panel",
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,69 @@
+{% extends "panel/base_panel.html" %}
+{% block title %}Documentos{% endblock %}
+
+{% block content %}
+<div class="p-card">
+    <div class="p-card-header">
+        <h1 class="p-card-title"><i class="bi bi-file-earmark-pdf me-2" style="color:#2E7D32;"></i>Documentos</h1>
+        <a href="{% url 'panel:documentos_create' %}" class="btn-p-verde">
+            <i class="bi bi-upload"></i>Subir documento
+        </a>
+    </div>
+    <div style="overflow-x:auto;">
+        {% if documentos %}
+        <table class="p-table">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Categoria</th>
+                    <th>Visible</th>
+                    <th>Destacado</th>
+                    <th>Fecha</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for d in documentos %}
+                <tr>
+                    <td style="max-width:320px;">
+                        <strong>{{ d.titulo }}</strong>
+                        {% if d.archivo %}
+                            <br><a href="{{ d.archivo.url }}" target="_blank" style="font-size:0.82rem;color:#1565C0;">
+                                <i class="bi bi-download"></i> Ver archivo
+                            </a>
+                        {% endif %}
+                    </td>
+                    <td>{{ d.categoria }}</td>
+                    <td>
+                        {% if d.publico %}<span class="badge-si">Si</span>
+                        {% else %}<span class="badge-no">No</span>{% endif %}
+                    </td>
+                    <td>
+                        {% if d.destacado %}<span class="badge-si">Si</span>
+                        {% else %}<span style="color:#90A4AE;">No</span>{% endif %}
+                    </td>
+                    <td style="white-space:nowrap;color:#546E7A;">{{ d.fecha|date:"d/m/Y" }}</td>
+                    <td class="acciones">
+                        <a href="{% url 'panel:documentos_edit' d.pk %}" class="btn-p-azul btn-p-sm">
+                            <i class="bi bi-pencil"></i>Editar
+                        </a>
+                        <a href="{% url 'panel:documentos_delete' d.pk %}" class="btn-p-rojo btn-p-sm" style="margin-left:0.4rem;">
+                            <i class="bi bi-trash3"></i>Eliminar
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="p-empty">
+            <i class="bi bi-file-earmark-pdf"></i>
+            Aun no hay documentos subidos.<br>
+            <a href="{% url 'panel:documentos_create' %}" class="btn-p-verde" style="margin-top:1rem;display:inline-flex;">
+                <i class="bi bi-upload"></i>Subir el primero
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

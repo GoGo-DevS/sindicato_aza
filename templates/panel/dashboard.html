@@ -1,0 +1,106 @@
+{% extends "panel/base_panel.html" %}
+{% block title %}Inicio{% endblock %}
+
+{% block content %}
+<h1 style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:1.6rem;margin-bottom:0.25rem;">
+    Bienvenido, {{ request.user.get_full_name|default:request.user.username }}
+</h1>
+<p style="color:#546E7A;margin-bottom:2rem;">
+    Desde aqui puede gestionar el contenido del portal del Sindicato AZA.
+</p>
+
+<!-- Tarjetas de seccion -->
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.25rem;margin-bottom:2.5rem;">
+
+    <!-- Comunicados -->
+    <div class="p-card" style="border-top:4px solid #1565C0;">
+        <div class="p-card-body" style="text-align:center;padding:2rem 1.5rem;">
+            <i class="bi bi-megaphone" style="font-size:2.5rem;color:#1565C0;margin-bottom:0.75rem;display:block;"></i>
+            <div style="font-family:'Montserrat',sans-serif;font-size:2.2rem;font-weight:800;color:#263238;line-height:1;">{{ total_comunicados }}</div>
+            <div style="color:#546E7A;font-size:0.9rem;margin-bottom:0.35rem;">publicados</div>
+            {% if borrador_comunicados %}
+                <div style="font-size:0.82rem;color:#E65100;">{{ borrador_comunicados }} en borrador</div>
+            {% endif %}
+            <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:1rem;margin:1rem 0 1.25rem;">Comunicados</div>
+            <a href="{% url 'panel:comunicados_list' %}" class="btn-p-azul" style="justify-content:center;width:100%;">
+                <i class="bi bi-list-ul"></i>Ver todos
+            </a>
+            <a href="{% url 'panel:comunicados_create' %}" class="btn-p-verde" style="justify-content:center;width:100%;margin-top:0.5rem;">
+                <i class="bi bi-plus-lg"></i>Nuevo comunicado
+            </a>
+        </div>
+    </div>
+
+    <!-- Documentos -->
+    <div class="p-card" style="border-top:4px solid #2E7D32;">
+        <div class="p-card-body" style="text-align:center;padding:2rem 1.5rem;">
+            <i class="bi bi-file-earmark-pdf" style="font-size:2.5rem;color:#2E7D32;margin-bottom:0.75rem;display:block;"></i>
+            <div style="font-family:'Montserrat',sans-serif;font-size:2.2rem;font-weight:800;color:#263238;line-height:1;">{{ total_documentos }}</div>
+            <div style="color:#546E7A;font-size:0.9rem;margin-bottom:0.35rem;">documentos subidos</div>
+            <div style="height:1.1rem;"></div>
+            <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:1rem;margin:1rem 0 1.25rem;">Documentos</div>
+            <a href="{% url 'panel:documentos_list' %}" class="btn-p-azul" style="justify-content:center;width:100%;">
+                <i class="bi bi-list-ul"></i>Ver todos
+            </a>
+            <a href="{% url 'panel:documentos_create' %}" class="btn-p-verde" style="justify-content:center;width:100%;margin-top:0.5rem;">
+                <i class="bi bi-upload"></i>Subir documento
+            </a>
+        </div>
+    </div>
+
+    <!-- Beneficios -->
+    <div class="p-card" style="border-top:4px solid #FF6F00;">
+        <div class="p-card-body" style="text-align:center;padding:2rem 1.5rem;">
+            <i class="bi bi-gift" style="font-size:2.5rem;color:#FF6F00;margin-bottom:0.75rem;display:block;"></i>
+            <div style="font-family:'Montserrat',sans-serif;font-size:2.2rem;font-weight:800;color:#263238;line-height:1;">{{ total_beneficios }}</div>
+            <div style="color:#546E7A;font-size:0.9rem;margin-bottom:0.35rem;">beneficios vigentes</div>
+            <div style="height:1.1rem;"></div>
+            <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:1rem;margin:1rem 0 1.25rem;">Beneficios</div>
+            <a href="{% url 'panel:beneficios_list' %}" class="btn-p-azul" style="justify-content:center;width:100%;">
+                <i class="bi bi-list-ul"></i>Ver todos
+            </a>
+            <a href="{% url 'panel:beneficios_create' %}" class="btn-p-verde" style="justify-content:center;width:100%;margin-top:0.5rem;">
+                <i class="bi bi-plus-lg"></i>Nuevo beneficio
+            </a>
+        </div>
+    </div>
+
+    <!-- Mensajes -->
+    <div class="p-card" style="border-top:4px solid {% if mensajes_sin_leer %}#C62828{% else %}#78909C{% endif %};">
+        <div class="p-card-body" style="text-align:center;padding:2rem 1.5rem;">
+            <i class="bi bi-envelope" style="font-size:2.5rem;color:{% if mensajes_sin_leer %}#C62828{% else %}#78909C{% endif %};margin-bottom:0.75rem;display:block;"></i>
+            <div style="font-family:'Montserrat',sans-serif;font-size:2.2rem;font-weight:800;color:#263238;line-height:1;">{{ mensajes_sin_leer }}</div>
+            <div style="color:#546E7A;font-size:0.9rem;margin-bottom:0.35rem;">mensajes sin leer</div>
+            <div style="height:1.1rem;"></div>
+            <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:1rem;margin:1rem 0 1.25rem;">Mensajes de contacto</div>
+            <a href="{% url 'panel:mensajes_list' %}" class="btn-p-azul" style="justify-content:center;width:100%;">
+                <i class="bi bi-inbox"></i>Ver mensajes
+            </a>
+        </div>
+    </div>
+
+</div>
+
+<!-- Ayuda rapida -->
+<div class="p-card">
+    <div class="p-card-header">
+        <h2 class="p-card-title"><i class="bi bi-question-circle me-2" style="color:#1565C0;"></i>Guia rapida</h2>
+    </div>
+    <div class="p-card-body">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;">
+            <div>
+                <div style="font-family:'Montserrat',sans-serif;font-weight:700;margin-bottom:0.35rem;">Publicar un comunicado</div>
+                <div style="color:#546E7A;font-size:0.9rem;">Haga clic en "Comunicados" → "Nuevo comunicado", complete el formulario y marque "Publicar en el sitio web".</div>
+            </div>
+            <div>
+                <div style="font-family:'Montserrat',sans-serif;font-weight:700;margin-bottom:0.35rem;">Subir un documento PDF</div>
+                <div style="color:#546E7A;font-size:0.9rem;">Haga clic en "Documentos" → "Subir documento", seleccione el archivo PDF desde su computador.</div>
+            </div>
+            <div>
+                <div style="font-family:'Montserrat',sans-serif;font-weight:700;margin-bottom:0.35rem;">Ver mensajes recibidos</div>
+                <div style="color:#546E7A;font-size:0.9rem;">Haga clic en "Mensajes" para ver los mensajes enviados por los socios desde el formulario de contacto.</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

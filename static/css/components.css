@@ -58,10 +58,11 @@
 .site-brand-text {
     line-height: 1.2;
     color: var(--aza-gris-oscuro);
-    max-width: 18ch;
-    font-size: 0.98rem;
+    max-width: 20ch;
+    font-size: 1rem;
     font-family: var(--font-titulo);
-    font-weight: 700;
+    font-weight: 800;
+    letter-spacing: 0.01em;
 }
 
 .site-header .nav-link {

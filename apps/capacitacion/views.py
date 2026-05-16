@@ -4,7 +4,7 @@ from django.shortcuts import render
 from .models import RecursoAyuda
 
 
-@login_required
+@login_required(login_url="/admin/login/")
 def ayuda_list(request):
     recursos = RecursoAyuda.objects.filter(activo=True)
 

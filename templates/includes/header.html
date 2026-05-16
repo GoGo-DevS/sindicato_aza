@@ -4,11 +4,11 @@
         <div class="container header-container">
             <a class="navbar-brand" href="{% url 'core:home' %}">
                 <div class="navbar-logo-container">
-                    {% if site_configuration.logo %}
-                        <img src="{{ site_configuration.logo.url }}" alt="Sindicato AZA" onerror="this.style.display='none'">
-                    {% else %}
-                        <img src="{% static 'img/logo.png' %}" alt="Sindicato AZA" onerror="this.style.display='none'">
-                    {% endif %}
+                    <div class="logo-badge">
+                        {% if site_configuration.logo %}
+                            <img src="{{ site_configuration.logo.url }}" alt="" onerror="this.style.display='none'">
+                        {% endif %}
+                    </div>
                     <span class="navbar-logo-text">
                         <span class="logo-text-main">Sindicato</span>
                         <span class="logo-text-accent">AZA</span>

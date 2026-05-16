@@ -1,11 +1,19 @@
+{% load static %}
 <header class="site-header">
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container header-container">
-            <a class="navbar-brand d-flex align-items-center gap-2" href="{% url 'core:home' %}">
-                {% if site_configuration.logo %}
-                    <img src="{{ site_configuration.logo.url }}" alt="{{ site_configuration.site_name }}" class="site-logo">
-                {% endif %}
-                <span class="site-brand-text">Sindicato AZA</span>
+            <a class="navbar-brand" href="{% url 'core:home' %}">
+                <div class="navbar-logo-container">
+                    {% if site_configuration.logo %}
+                        <img src="{{ site_configuration.logo.url }}" alt="Sindicato AZA" onerror="this.style.display='none'">
+                    {% else %}
+                        <img src="{% static 'img/logo.png' %}" alt="Sindicato AZA" onerror="this.style.display='none'">
+                    {% endif %}
+                    <span class="navbar-logo-text">
+                        <span class="logo-text-main">Sindicato</span>
+                        <span class="logo-text-accent">AZA</span>
+                    </span>
+                </div>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Abrir navegacion">
                 <i class="bi bi-list fs-3"></i>

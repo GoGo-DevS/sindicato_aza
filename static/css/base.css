@@ -303,3 +303,40 @@ a:hover { color: var(--aza-verde); }
 }
 
 .hero-eyebrow { color: rgba(255, 255, 255, 0.82); }
+
+/* ============================================================
+   NAVBAR LOGO
+============================================================ */
+.navbar-logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.navbar-logo-container img {
+    height: 42px;
+    width: auto;
+}
+
+.navbar-logo-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+}
+
+.logo-text-main {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--aza-gris-medio);
+}
+
+.logo-text-accent {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--aza-verde);
+    letter-spacing: 0.04em;
+}

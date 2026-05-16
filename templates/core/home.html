@@ -3,11 +3,11 @@
 {% block title %}Inicio | {{ site_configuration.site_name|default:"Portal Institucional" }}{% endblock %}
 
 {% block content %}
-<section class="hero-section py-5 py-lg-6">
+<section class="hero-section py-5 py-lg-6" id="inicio">
     <div class="container hero-container">
         <div class="hero-shell row align-items-center g-4 g-lg-5">
             <div class="col-lg-6 col-xl-7">
-                <div class="hero-copy">
+                <div class="hero-copy reveal">
                     <span class="section-eyebrow hero-eyebrow">{{ site_configuration.site_name|default:"Portal Institucional" }}</span>
                     <h1 class="fw-bold mb-3 hero-title">
                         {{ site_configuration.hero_title|default:"Centraliza la informacion y mejora la comunicacion con tu comunidad" }}
@@ -42,7 +42,7 @@
                 </div>
             </div>
             <div class="col-lg-6 col-xl-5">
-                <div class="hero-card hero-media-card">
+                <div class="hero-card hero-media-card reveal reveal-delay-2">
                     {% if site_configuration.hero_image %}
                         <img src="{{ site_configuration.hero_image.url }}" alt="{{ site_configuration.hero_title|default:'Imagen principal' }}" class="img-fluid hero-image">
                     {% else %}
@@ -65,13 +65,13 @@
 
 <section class="py-5 py-lg-6 section-soft">
     <div class="container">
-        <div class="section-heading text-center mb-5">
+        <div class="section-heading text-center mb-5 reveal">
             <span class="section-eyebrow">Accesos directos</span>
             <h2 class="h2 mb-2">Navegacion clara para contenido institucional</h2>
             <p class="text-muted mb-0">Accede rapidamente a la informacion clave del portal desde cualquier dispositivo.</p>
         </div>
         <div class="row g-4">
-            <div class="col-md-4">
+            <div class="col-md-4 reveal">
                 <a class="info-card h-100 text-decoration-none d-block" href="{% url 'comunicados:list' %}">
                     <span class="info-card-icon">01</span>
                     <h2 class="h5">Comunicados</h2>
@@ -79,7 +79,7 @@
                     <span class="info-card-link">Explorar seccion</span>
                 </a>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 reveal reveal-delay-1">
                 <a class="info-card h-100 text-decoration-none d-block" href="{% url 'documentos:list' %}">
                     <span class="info-card-icon">02</span>
                     <h2 class="h5">Documentos</h2>
@@ -87,7 +87,7 @@
                     <span class="info-card-link">Ver documentos</span>
                 </a>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 reveal reveal-delay-2">
                 <a class="info-card h-100 text-decoration-none d-block" href="{% url 'beneficios:list' %}">
                     <span class="info-card-icon">03</span>
                     <h2 class="h5">Beneficios</h2>
@@ -101,7 +101,7 @@
 
 <section class="py-5 py-lg-6">
     <div class="container">
-        <div class="highlight-banner">
+        <div class="highlight-banner reveal">
             <div class="row align-items-center g-4">
                 <div class="col-lg-8">
                     <span class="section-eyebrow mb-2">Gestion del sitio</span>
@@ -120,7 +120,7 @@
 
 <section class="py-5 py-lg-6 content-section">
     <div class="container">
-        <div class="section-heading d-flex justify-content-between align-items-end gap-3 flex-wrap mb-4">
+        <div class="section-heading d-flex justify-content-between align-items-end gap-3 flex-wrap mb-4 reveal">
             <div>
                 <span class="section-eyebrow">Actualidad</span>
                 <h2 class="h2 mb-0">Ultimos comunicados</h2>
@@ -129,7 +129,7 @@
         </div>
         <div class="row g-4">
             {% for comunicado in comunicados_destacados %}
-                <div class="col-md-6 col-xl-4">
+                <div class="col-md-6 col-xl-4 reveal">
                     <article class="content-card content-card-feature h-100">
                         <div class="content-card-body">
                             <span class="badge text-bg-light mb-3">{{ comunicado.categoria }}</span>
@@ -204,7 +204,7 @@
 
 <section class="py-5 py-lg-6 content-section">
     <div class="container">
-        <div class="section-heading d-flex justify-content-between align-items-end gap-3 flex-wrap mb-4">
+        <div class="section-heading d-flex justify-content-between align-items-end gap-3 flex-wrap mb-4 reveal">
             <div>
                 <span class="section-eyebrow">Formacion</span>
                 <h2 class="h2 mb-0">Capacitaciones disponibles</h2>
@@ -213,7 +213,7 @@
         </div>
         <div class="row g-4">
             {% for cap in capacitaciones_destacadas %}
-                <div class="col-md-6 col-xl-4">
+                <div class="col-md-6 col-xl-4 reveal">
                     <article class="content-card content-card-feature h-100">
                         <div class="content-card-body">
                             <div class="d-flex justify-content-between align-items-center gap-2 mb-3">

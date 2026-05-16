@@ -8,7 +8,7 @@
                 <span class="site-brand-text">{{ site_configuration.site_name|default:"Portal Institucional" }}</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Abrir navegacion">
-                <span class="navbar-toggler-icon"></span>
+                <i class="bi bi-list fs-4"></i>
             </button>
             <div class="collapse navbar-collapse" id="mainNavbar">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
@@ -31,7 +31,7 @@
                         <a class="nav-link" href="{% url 'contacto:index' %}">Contacto</a>
                     </li>
                     <li class="nav-item ms-lg-2">
-                        <a class="btn btn-primary btn-sm px-3" href="{% url 'contacto:index' %}">Escribenos</a>
+                        <a class="btn btn-primary btn-sm px-4" href="{% url 'contacto:index' %}">Contactar</a>
                     </li>
                 </ul>
             </div>

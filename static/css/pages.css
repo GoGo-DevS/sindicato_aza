@@ -227,6 +227,9 @@
         padding-bottom: 0.8rem;
     }
 
+    /* Logo mas compacto en mobile */
+    .site-logo { max-height: 40px; }
+
     /* Brand mas compacto en mobile */
     .site-brand-text {
         font-size: 0.88rem;

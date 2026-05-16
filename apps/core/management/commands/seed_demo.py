@@ -11,14 +11,14 @@ from apps.siteconfig.models import SiteConfiguration
 
 
 class Command(BaseCommand):
-    help = "Carga datos demo reutilizables para el portal institucional."
+    help = "Carga datos iniciales para el portal Sindicato Unificado AZA."
 
     def handle(self, *args, **options):
         self.create_site_configuration()
         self.create_comunicados()
         self.create_documentos()
         self.create_beneficios()
-        self.stdout.write(self.style.SUCCESS("Datos demo cargados correctamente."))
+        self.stdout.write(self.style.SUCCESS("Datos AZA cargados correctamente."))
 
     def create_site_configuration(self):
         configuration = SiteConfiguration.get_solo()
@@ -27,42 +27,42 @@ class Command(BaseCommand):
             return
 
         configuration = SiteConfiguration.objects.create(
-            site_name="Portal Institucional",
-            site_tagline="Portal institucional informativo y autoadministrable",
-            meta_description="Centraliza la informacion y mejora la comunicacion con tu comunidad",
-            primary_color="#0F4C5C",
-            secondary_color="#1F2937",
-            accent_color="#EAB308",
-            contact_email="contacto@portalinstitucional.demo",
+            site_name="Sindicato Unificado AZA",
+            site_tagline="Juntos somos mas fuertes",
+            meta_description="Portal oficial del Sindicato Unificado AZA. Informacion, beneficios y comunicados para todos los socios.",
+            primary_color="#1565C0",
+            secondary_color="#263238",
+            accent_color="#2E7D32",
+            contact_email="contacto@sindicatoaza.cl",
             contact_phone="+56 2 2345 6789",
             whatsapp_number="+56 9 8765 4321",
-            address="Av. Institucional 123, Santiago",
-            facebook_url="https://facebook.com/portalinstitucionaldemo",
-            instagram_url="https://instagram.com/portalinstitucionaldemo",
-            linkedin_url="https://linkedin.com/company/portalinstitucionaldemo",
-            hero_title="Centraliza la informacion y mejora la comunicacion con tu comunidad",
+            address="Instalaciones AZA, Santiago",
+            facebook_url="https://facebook.com/sindicatoaza",
+            instagram_url="https://instagram.com/sindicatoaza",
+            linkedin_url="https://linkedin.com/company/sindicatoaza",
+            hero_title="Mas fuertes juntos, mejor protegidos siempre",
             hero_text=(
-                "Una base profesional para publicar comunicados, compartir documentos, "
-                "mostrar beneficios y mantener abiertos los canales de contacto."
+                "Portal oficial del Sindicato Unificado AZA. Accede a comunicados, "
+                "documentos, beneficios y toda la informacion relevante para los socios."
             ),
         )
         configuration.logo.save(
-            "logo-demo.svg",
-            ContentFile(self.build_logo_svg(configuration.site_name)),
+            "logo-aza.svg",
+            ContentFile(self.build_logo_svg()),
             save=True,
         )
         configuration.hero_image.save(
-            "hero-demo.svg",
+            "hero-aza.svg",
             ContentFile(self.build_hero_svg()),
             save=True,
         )
-        self.stdout.write("SiteConfiguration creada.")
+        self.stdout.write("SiteConfiguration AZA creada.")
 
     def create_comunicados(self):
         categories = [
-            ("Informacion general", "Novedades institucionales de interes transversal."),
-            ("Actividades", "Convocatorias, encuentros y actividades programadas."),
-            ("Gestion interna", "Actualizaciones de procesos y coordinaciones internas."),
+            ("Administrativo", "Avisos y gestiones administrativas del sindicato."),
+            ("Laboral", "Informacion sobre condiciones laborales y negociaciones."),
+            ("Bienestar", "Actividades y programas de bienestar para los socios."),
         ]
         category_map = {}
         for name, description in categories:
@@ -75,57 +75,46 @@ class Command(BaseCommand):
         now = timezone.now()
         comunicados = [
             {
-                "categoria": category_map["Informacion general"],
-                "titulo": "Actualizacion del portal institucional",
-                "slug": "actualizacion-del-portal-institucional",
-                "extracto": "Se incorporaron nuevas secciones para centralizar la informacion y facilitar el acceso publico.",
+                "categoria": category_map["Administrativo"],
+                "titulo": "Convocatoria asamblea ordinaria de socios",
+                "slug": "convocatoria-asamblea-ordinaria-de-socios",
+                "extracto": "Se convoca a todos los socios a la asamblea ordinaria para revisar el balance anual.",
                 "contenido": (
-                    "El portal institucional ya permite organizar comunicados, documentos "
-                    "y beneficios en un mismo sitio. Esta estructura busca mejorar la "
-                    "claridad de la informacion y reducir la dispersion de contenidos."
+                    "El directorio del Sindicato AZA informa que la proxima asamblea ordinaria "
+                    "se realizara en la sede sindical. Se revisara el balance del periodo, "
+                    "informe de actividades y se recibiran consultas de los socios."
                 ),
                 "publicado": True,
                 "destacado": True,
-                "fecha_publicacion": now - timedelta(days=1),
+                "fecha_publicacion": now - timedelta(days=2),
             },
             {
-                "categoria": category_map["Actividades"],
-                "titulo": "Convocatoria a jornada informativa mensual",
-                "slug": "convocatoria-a-jornada-informativa-mensual",
-                "extracto": "Se invita a la comunidad a participar en una jornada abierta para revisar avances y prioridades.",
+                "categoria": category_map["Laboral"],
+                "titulo": "Actualizacion de convenio colectivo vigente",
+                "slug": "actualizacion-convenio-colectivo-vigente",
+                "extracto": "Se informa sobre los acuerdos alcanzados en la ultima ronda de negociacion colectiva.",
                 "contenido": (
-                    "La jornada informativa mensual permitira revisar hitos recientes, "
-                    "aclarar dudas y presentar lineas de trabajo para el proximo periodo."
-                ),
-                "publicado": True,
-                "destacado": False,
-                "fecha_publicacion": now - timedelta(days=4),
-            },
-            {
-                "categoria": category_map["Gestion interna"],
-                "titulo": "Nuevo calendario de procesos administrativos",
-                "slug": "nuevo-calendario-de-procesos-administrativos",
-                "extracto": "Se publico un calendario referencial para ordenar fechas y entregables institucionales.",
-                "contenido": (
-                    "Con el objetivo de facilitar la planificacion, se consolido un "
-                    "calendario con hitos, plazos y responsables de procesos frecuentes."
+                    "Tras las reuniones sostenidas con la empresa, el sindicato alcanzo acuerdos "
+                    "en materias de reajuste salarial, beneficios adicionales y condiciones de jornada. "
+                    "El convenio entra en vigencia a partir del presente mes."
                 ),
                 "publicado": True,
                 "destacado": True,
-                "fecha_publicacion": now - timedelta(days=8),
+                "fecha_publicacion": now - timedelta(days=5),
             },
             {
-                "categoria": category_map["Informacion general"],
-                "titulo": "Canales oficiales de contacto actualizados",
-                "slug": "canales-oficiales-de-contacto-actualizados",
-                "extracto": "Se actualizaron los datos institucionales para mejorar la atencion y la respuesta a consultas.",
+                "categoria": category_map["Bienestar"],
+                "titulo": "Programa de actividades primer semestre",
+                "slug": "programa-actividades-primer-semestre",
+                "extracto": "Conoce el calendario de actividades de bienestar planificadas para los socios y sus familias.",
                 "contenido": (
-                    "Los canales de contacto del portal fueron revisados para mantener "
-                    "informacion vigente y facilitar la comunicacion con la comunidad."
+                    "El area de bienestar del sindicato ha preparado un programa de actividades "
+                    "que incluye talleres, jornadas recreativas y beneficios para los socios. "
+                    "Revisa el calendario adjunto y reserva tu lugar."
                 ),
                 "publicado": True,
                 "destacado": False,
-                "fecha_publicacion": now - timedelta(days=12),
+                "fecha_publicacion": now - timedelta(days=10),
             },
         ]
 
@@ -137,16 +126,16 @@ class Command(BaseCommand):
             if created:
                 comunicado.imagen.save(
                     f"{item['slug']}.svg",
-                    ContentFile(self.build_card_svg(item["titulo"], "#0F4C5C")),
+                    ContentFile(self.build_card_svg(item["titulo"], "#1565C0")),
                     save=True,
                 )
-        self.stdout.write("Comunicados demo listos.")
+        self.stdout.write("Comunicados AZA listos.")
 
     def create_documentos(self):
         categories = [
-            ("Reglamentos", "Documentos normativos y lineamientos."),
-            ("Actas", "Registros de reuniones y acuerdos."),
-            ("Formularios", "Plantillas y formatos de uso frecuente."),
+            ("Reglamentos", "Documentos normativos internos del sindicato."),
+            ("Actas", "Registros de asambleas y reuniones de directorio."),
+            ("Formularios", "Plantillas y formularios de uso frecuente."),
         ]
         category_map = {}
         for name, description in categories:
@@ -157,11 +146,11 @@ class Command(BaseCommand):
             category_map[name] = category
 
         documentos = [
-            ("Reglamento general del portal", "reglamento-general-del-portal", "Reglamentos", True),
-            ("Acta de reunion informativa", "acta-de-reunion-informativa", "Actas", True),
-            ("Formulario de solicitud interna", "formulario-de-solicitud-interna", "Formularios", False),
-            ("Protocolo de comunicaciones", "protocolo-de-comunicaciones", "Reglamentos", True),
-            ("Ficha de actualizacion de datos", "ficha-de-actualizacion-de-datos", "Formularios", False),
+            ("Estatutos del Sindicato AZA", "estatutos-sindicato-aza", "Reglamentos", True),
+            ("Acta asamblea general extraordinaria", "acta-asamblea-general-extraordinaria", "Actas", True),
+            ("Formulario de solicitud de beneficio", "formulario-solicitud-beneficio", "Formularios", False),
+            ("Reglamento interno de funcionamiento", "reglamento-interno-funcionamiento", "Reglamentos", True),
+            ("Ficha de actualizacion de datos del socio", "ficha-actualizacion-datos-socio", "Formularios", False),
         ]
 
         for index, (title, slug, category_name, featured) in enumerate(documentos, start=1):
@@ -170,7 +159,7 @@ class Command(BaseCommand):
                 defaults={
                     "categoria": category_map[category_name],
                     "titulo": title,
-                    "descripcion": "Documento demo para validar descargas y organizacion por categorias.",
+                    "descripcion": "Documento oficial del Sindicato Unificado AZA.",
                     "publico": True,
                     "destacado": featured,
                     "fecha": timezone.localdate() - timedelta(days=index),
@@ -182,13 +171,13 @@ class Command(BaseCommand):
                     ContentFile(self.build_document_text(title, category_name)),
                     save=True,
                 )
-        self.stdout.write("Documentos demo listos.")
+        self.stdout.write("Documentos AZA listos.")
 
     def create_beneficios(self):
         categories = [
-            ("Salud", "Beneficios orientados al bienestar y apoyo."),
-            ("Educacion", "Convenios y recursos formativos."),
-            ("Bienestar", "Apoyos y beneficios complementarios."),
+            ("Salud", "Convenios y beneficios de salud para socios."),
+            ("Capacitacion", "Beneficios en programas formativos."),
+            ("Bienestar", "Beneficios complementarios de bienestar."),
         ]
         category_map = {}
         for name, description in categories:
@@ -201,43 +190,43 @@ class Command(BaseCommand):
         benefits = [
             {
                 "categoria": category_map["Salud"],
-                "titulo": "Convenio con centro medico asociado",
-                "slug": "convenio-con-centro-medico-asociado",
-                "descripcion_corta": "Atencion preferente y valores referenciales en prestaciones seleccionadas.",
-                "contenido": "Beneficio demo pensado para mostrar convenios activos con informacion breve y clara.",
+                "titulo": "Seguro complementario de salud",
+                "slug": "seguro-complementario-salud",
+                "descripcion_corta": "Reembolso de gastos medicos para socios y su grupo familiar.",
+                "contenido": "Cobertura complementaria que reembolsa gastos medicos, dentales y de hospitalizacion.",
                 "activo": True,
                 "destacado": True,
-                "vigencia": timezone.localdate() + timedelta(days=90),
+                "vigencia": timezone.localdate() + timedelta(days=300),
             },
             {
-                "categoria": category_map["Educacion"],
-                "titulo": "Descuento en programas de capacitacion",
-                "slug": "descuento-en-programas-de-capacitacion",
-                "descripcion_corta": "Acceso preferente a cursos, talleres y actividades formativas.",
-                "contenido": "Convenio orientado al desarrollo de capacidades y actualizacion de conocimientos.",
+                "categoria": category_map["Capacitacion"],
+                "titulo": "Acceso a plataforma de e-learning",
+                "slug": "acceso-plataforma-elearning",
+                "descripcion_corta": "Acceso gratuito a cursos en linea de capacitacion profesional.",
+                "contenido": "Los socios tienen acceso ilimitado a la plataforma de cursos en linea durante el periodo de vigencia.",
                 "activo": True,
                 "destacado": True,
                 "vigencia": timezone.localdate() + timedelta(days=120),
             },
             {
                 "categoria": category_map["Bienestar"],
-                "titulo": "Red de apoyo en servicios complementarios",
-                "slug": "red-de-apoyo-en-servicios-complementarios",
-                "descripcion_corta": "Acceso a beneficios en comercios y servicios aliados.",
-                "contenido": "Beneficio flexible para mostrar acuerdos con instituciones y comercios externos.",
+                "titulo": "Caja de navidad para socios activos",
+                "slug": "caja-navidad-socios-activos",
+                "descripcion_corta": "Entrega de caja de navidad anual para todos los socios activos.",
+                "contenido": "El sindicato entrega una caja de navidad a todos los socios con cotizaciones al dia.",
                 "activo": True,
-                "destacado": False,
-                "vigencia": timezone.localdate() + timedelta(days=60),
+                "destacado": True,
+                "vigencia": timezone.localdate() + timedelta(days=220),
             },
             {
                 "categoria": category_map["Salud"],
-                "titulo": "Orientacion preventiva y jornadas tematicas",
-                "slug": "orientacion-preventiva-y-jornadas-tematicas",
-                "descripcion_corta": "Instancias informativas y acciones de bienestar para la comunidad.",
-                "contenido": "Espacios de apoyo y orientacion con foco en prevencion y acompanamiento institucional.",
+                "titulo": "Convenio optico con descuento para socios",
+                "slug": "convenio-optico-descuento-socios",
+                "descripcion_corta": "Descuento del 30% en lentes y examenes de vista en opticas convenidas.",
+                "contenido": "Los socios y su grupo familiar acceden a descuentos especiales en opticas asociadas.",
                 "activo": True,
-                "destacado": True,
-                "vigencia": timezone.localdate() + timedelta(days=150),
+                "destacado": False,
+                "vigencia": timezone.localdate() + timedelta(days=180),
             },
         ]
 
@@ -249,52 +238,51 @@ class Command(BaseCommand):
             if created:
                 benefit.imagen.save(
                     f"{item['slug']}.svg",
-                    ContentFile(self.build_card_svg(item["titulo"], "#1F2937")),
+                    ContentFile(self.build_card_svg(item["titulo"], "#263238")),
                     save=True,
                 )
-        self.stdout.write("Beneficios demo listos.")
+        self.stdout.write("Beneficios AZA listos.")
 
-    def build_logo_svg(self, site_name):
-        return f"""
+    def build_logo_svg(self):
+        return b"""
 <svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240">
-  <rect width="240" height="240" rx="40" fill="#0F4C5C"/>
-  <circle cx="120" cy="120" r="74" fill="#EAB308" opacity="0.15"/>
-  <text x="120" y="104" text-anchor="middle" font-size="26" font-family="Arial, sans-serif" fill="#ffffff">Portal</text>
-  <text x="120" y="138" text-anchor="middle" font-size="26" font-family="Arial, sans-serif" fill="#ffffff">Demo</text>
-  <text x="120" y="182" text-anchor="middle" font-size="12" font-family="Arial, sans-serif" fill="#d9eef2">{site_name}</text>
+  <rect width="240" height="240" rx="40" fill="#1565C0"/>
+  <circle cx="120" cy="120" r="74" fill="#2E7D32" opacity="0.20"/>
+  <text x="120" y="112" text-anchor="middle" font-size="58" font-family="Arial Black, Arial, sans-serif" font-weight="900" fill="#ffffff">AZA</text>
+  <text x="120" y="168" text-anchor="middle" font-size="13" font-family="Arial, sans-serif" fill="#C8E6C9" letter-spacing="3">SINDICATO</text>
 </svg>
-""".strip().encode("utf-8")
+""".strip()
 
     def build_hero_svg(self):
         return b"""
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="900" viewBox="0 0 1280 900">
-  <rect width="1280" height="900" fill="#f4fafb"/>
-  <rect x="72" y="90" width="1136" height="720" rx="36" fill="#ffffff" stroke="#dbe2ea"/>
-  <rect x="132" y="160" width="420" height="32" rx="16" fill="#0F4C5C" opacity="0.15"/>
-  <rect x="132" y="220" width="510" height="72" rx="16" fill="#0F4C5C"/>
-  <rect x="132" y="320" width="420" height="20" rx="10" fill="#1F2937" opacity="0.18"/>
-  <rect x="132" y="356" width="380" height="20" rx="10" fill="#1F2937" opacity="0.14"/>
-  <rect x="132" y="420" width="180" height="56" rx="18" fill="#0F4C5C"/>
-  <rect x="332" y="420" width="180" height="56" rx="18" fill="#ffffff" stroke="#0F4C5C" stroke-width="3"/>
+  <rect width="1280" height="900" fill="#EEF2FF"/>
+  <rect x="72" y="90" width="1136" height="720" rx="36" fill="#ffffff" stroke="#C5CAE9"/>
+  <rect x="132" y="160" width="420" height="32" rx="16" fill="#1565C0" opacity="0.12"/>
+  <rect x="132" y="220" width="510" height="72" rx="16" fill="#1565C0"/>
+  <rect x="132" y="320" width="420" height="20" rx="10" fill="#263238" opacity="0.16"/>
+  <rect x="132" y="356" width="380" height="20" rx="10" fill="#263238" opacity="0.12"/>
+  <rect x="132" y="420" width="180" height="56" rx="18" fill="#2E7D32"/>
+  <rect x="332" y="420" width="180" height="56" rx="18" fill="#ffffff" stroke="#1565C0" stroke-width="3"/>
   <rect x="706" y="170" width="392" height="540" rx="28" fill="#f8fafc" stroke="#dbe2ea"/>
-  <rect x="760" y="240" width="280" height="170" rx="24" fill="#0F4C5C"/>
-  <rect x="760" y="446" width="280" height="28" rx="14" fill="#1F2937" opacity="0.18"/>
-  <rect x="760" y="492" width="230" height="28" rx="14" fill="#1F2937" opacity="0.12"/>
-  <rect x="760" y="560" width="130" height="88" rx="20" fill="#EAB308" opacity="0.25"/>
-  <rect x="912" y="560" width="128" height="88" rx="20" fill="#0F4C5C" opacity="0.1"/>
+  <rect x="760" y="240" width="280" height="170" rx="24" fill="#1565C0"/>
+  <rect x="760" y="446" width="280" height="28" rx="14" fill="#263238" opacity="0.18"/>
+  <rect x="760" y="492" width="230" height="28" rx="14" fill="#263238" opacity="0.12"/>
+  <rect x="760" y="560" width="130" height="88" rx="20" fill="#2E7D32" opacity="0.25"/>
+  <rect x="912" y="560" width="128" height="88" rx="20" fill="#1565C0" opacity="0.10"/>
 </svg>
 """.strip()
 
     def build_card_svg(self, title, color):
         return f"""
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720">
-  <rect width="1200" height="720" fill="#f8fafc"/>
+  <rect width="1200" height="720" fill="#EEF2FF"/>
   <rect x="60" y="60" width="1080" height="600" rx="34" fill="{color}" opacity="0.94"/>
   <rect x="120" y="130" width="220" height="18" rx="9" fill="#ffffff" opacity="0.32"/>
   <text x="120" y="250" font-size="54" font-family="Arial, sans-serif" fill="#ffffff">{title[:28]}</text>
   <rect x="120" y="310" width="420" height="18" rx="9" fill="#ffffff" opacity="0.18"/>
   <rect x="120" y="344" width="360" height="18" rx="9" fill="#ffffff" opacity="0.14"/>
-  <circle cx="940" cy="220" r="90" fill="#EAB308" opacity="0.20"/>
+  <circle cx="940" cy="220" r="90" fill="#2E7D32" opacity="0.20"/>
   <circle cx="1010" cy="470" r="120" fill="#ffffff" opacity="0.08"/>
 </svg>
 """.strip().encode("utf-8")
@@ -303,6 +291,5 @@ class Command(BaseCommand):
         return (
             f"{title}\n\n"
             f"Categoria: {category}\n\n"
-            "Este archivo fue generado como documento demo para validar descargas, "
-            "organizacion por categorias y contenido publico en el portal institucional.\n"
+            "Documento oficial del Sindicato Unificado AZA.\n"
         ).encode("utf-8")

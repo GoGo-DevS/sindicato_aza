@@ -6,10 +6,10 @@
                     {% if site_configuration.logo %}
                         <img src="{{ site_configuration.logo.url }}" alt="{{ site_configuration.site_name }}" height="32" class="me-2" style="filter: brightness(0) invert(1); opacity:0.9;">
                     {% endif %}
-                    {{ site_configuration.site_name|default:"Portal Institucional" }}
+                    {{ site_configuration.site_name|default:"Sindicato Unificado AZA" }}
                 </p>
                 <p class="mb-0 text-muted small">
-                    {{ site_configuration.site_tagline|default:"Portal institucional informativo y autoadministrable" }}
+                    {{ site_configuration.site_tagline|default:"Juntos somos más fuertes" }}
                 </p>
             </div>
             <div class="col-sm-6 col-lg-3">
@@ -19,7 +19,6 @@
                     <li><a href="{% url 'comunicados:list' %}">Comunicados</a></li>
                     <li><a href="{% url 'documentos:list' %}">Documentos</a></li>
                     <li><a href="{% url 'beneficios:list' %}">Beneficios</a></li>
-                    <li><a href="{% url 'capacitacion:list' %}">Capacitacion</a></li>
                     <li><a href="{% url 'contacto:index' %}">Contacto</a></li>
                 </ul>
             </div>
@@ -61,7 +60,7 @@
         <hr class="footer-divider">
 
         <p class="footer-copy mb-0">
-            &copy; 2025 Sindicato AZA &middot; Portal Institucional &middot;
+            &copy; 2025 Sindicato Unificado AZA &middot; Todos los derechos reservados &middot;
             Desarrollado por <a href="#">GoGoDevS</a>
         </p>
     </div>

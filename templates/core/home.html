@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Inicio | {{ site_configuration.site_name|default:"Portal Institucional" }}{% endblock %}
+{% block title %}Inicio | {{ site_configuration.site_name|default:"Sindicato Unificado AZA" }}{% endblock %}
 
 {% block content %}
 <section class="hero-section py-5 py-lg-6" id="inicio">
@@ -8,15 +8,15 @@
         <div class="hero-shell row align-items-center g-4 g-lg-5">
             <div class="col-lg-6 col-xl-7">
                 <div class="hero-copy reveal">
-                    <span class="section-eyebrow hero-eyebrow">{{ site_configuration.site_name|default:"Portal Institucional" }}</span>
+                    <span class="section-eyebrow hero-eyebrow">{{ site_configuration.site_name|default:"Sindicato Unificado AZA" }}</span>
                     <h1 class="fw-bold mb-3 hero-title">
-                        {{ site_configuration.hero_title|default:"Centraliza la informacion y mejora la comunicacion con tu comunidad" }}
+                        {{ site_configuration.hero_title|default:"Mas fuertes juntos, mejor protegidos siempre" }}
                     </h1>
                     <p class="lead hero-description mb-4">
-                        {{ site_configuration.hero_text|default:"Portal institucional informativo y autoadministrable" }}
+                        {{ site_configuration.hero_text|default:"Portal oficial del Sindicato Unificado AZA. Comunicados, documentos, beneficios y toda la informacion relevante para los socios." }}
                     </p>
                     <div class="d-flex flex-wrap gap-3 hero-actions">
-                        <a class="btn btn-accent btn-lg" href="{% url 'comunicados:list' %}">Ver comunicados</a>
+                        <a class="btn btn-accent btn-lg" href="{% url 'beneficios:list' %}">Ver Beneficios</a>
                         <a class="btn btn-outline-light btn-lg" href="{% url 'contacto:index' %}">Contactar</a>
                     </div>
                     <div class="hero-metrics row g-3 mt-4">
@@ -47,7 +47,7 @@
                         <img src="{{ site_configuration.hero_image.url }}" alt="{{ site_configuration.hero_title|default:'Imagen principal' }}" class="img-fluid hero-image">
                     {% else %}
                         <div class="hero-placeholder-card">
-                            <h2 class="h4 mb-3">{{ site_configuration.site_name|default:"Portal Institucional" }}</h2>
+                            <h2 class="h4 mb-3">{{ site_configuration.site_name|default:"Sindicato Unificado AZA" }}</h2>
                             <p class="mb-0">Centraliza la informacion y mejora la comunicacion con tu comunidad.</p>
                         </div>
                     {% endif %}
@@ -105,9 +105,9 @@
             <div class="row align-items-center g-4">
                 <div class="col-lg-8">
                     <span class="section-eyebrow mb-2">Gestion del sitio</span>
-                    <h2 class="h1 mb-2">{{ site_configuration.site_name|default:"Portal Institucional" }}</h2>
+                    <h2 class="h1 mb-2">{{ site_configuration.site_name|default:"Sindicato Unificado AZA" }}</h2>
                     <p class="text-muted mb-0">
-                        {{ site_configuration.meta_description|default:"Centraliza la informacion y mejora la comunicacion con tu comunidad" }}
+                        {{ site_configuration.meta_description|default:"Portal oficial del Sindicato Unificado AZA. Informacion, beneficios y comunicados para todos los socios." }}
                     </p>
                 </div>
                 <div class="col-lg-4 text-lg-end">
@@ -202,40 +202,4 @@
     </div>
 </section>
 
-<section class="py-5 py-lg-6 content-section">
-    <div class="container">
-        <div class="section-heading d-flex justify-content-between align-items-end gap-3 flex-wrap mb-4 reveal">
-            <div>
-                <span class="section-eyebrow">Formacion</span>
-                <h2 class="h2 mb-0">Capacitaciones disponibles</h2>
-            </div>
-            <a class="btn btn-outline-primary" href="{% url 'capacitacion:list' %}">Ver todas las capacitaciones</a>
-        </div>
-        <div class="row g-4">
-            {% for cap in capacitaciones_destacadas %}
-                <div class="col-md-6 col-xl-4 reveal">
-                    <article class="content-card content-card-feature h-100">
-                        <div class="content-card-body">
-                            <div class="d-flex justify-content-between align-items-center gap-2 mb-3">
-                                <span class="badge text-bg-light">{{ cap.categoria }}</span>
-                                <span class="badge text-bg-secondary">{{ cap.get_modalidad_display }}</span>
-                            </div>
-                            <h3 class="h5 mb-2">
-                                <a class="stretched-link text-decoration-none" href="{% url 'capacitacion:detail' cap.slug %}">{{ cap.titulo }}</a>
-                            </h3>
-                            <p class="text-muted mb-2">{{ cap.descripcion_corta }}</p>
-                            <p class="small text-muted mb-0">{{ cap.fecha|date:"d M Y" }} &middot; {{ cap.duracion }}</p>
-                        </div>
-                    </article>
-                </div>
-            {% empty %}
-                <div class="col-12">
-                    <div class="empty-state">
-                        <p class="mb-0">Proximamente se publicaran capacitaciones para los socios.</p>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-    </div>
-</section>
 {% endblock %}

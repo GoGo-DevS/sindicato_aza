@@ -10,7 +10,7 @@ from apps.documentos.models import CategoriaDocumento, Documento
 
 
 class Command(BaseCommand):
-    help = "Carga datos de ejemplo para el portal Sindicato AZA."
+    help = "Carga datos iniciales para el portal Sindicato AZA."
 
     def handle(self, *args, **options):
         self.create_comunicados()
@@ -140,7 +140,7 @@ class Command(BaseCommand):
                     f"{slug}.txt",
                     ContentFile(
                         f"{titulo}\n\nCategoria: {categoria_nombre}\n\n"
-                        "Documento de ejemplo generado para el portal Sindicato AZA.\n".encode("utf-8")
+                        "Documento oficial del Sindicato Unificado AZA.\n".encode("utf-8")
                     ),
                     save=True,
                 )

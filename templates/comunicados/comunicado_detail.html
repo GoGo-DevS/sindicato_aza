@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}{{ comunicado.titulo }} | {{ site_configuration.site_name|default:"Portal Institucional" }}{% endblock %}
+{% block meta_description %}{{ comunicado.extracto }}{% endblock %}
+
+{% block content %}
+<article class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-9">
+                <a class="small-link mb-4 d-inline-flex" href="{% url 'comunicados:list' %}">Volver a comunicados</a>
+                <div class="detail-card">
+                    <div class="mb-3 d-flex flex-wrap gap-2 align-items-center">
+                        <span class="badge text-bg-light">{{ comunicado.categoria }}</span>
+                        {% if comunicado.destacado %}
+                            <span class="badge text-bg-warning">Destacado</span>
+                        {% endif %}
+                        <span class="text-muted small">{{ comunicado.fecha_publicacion|date:"d M Y H:i" }}</span>
+                    </div>
+                    <h1 class="display-6 fw-bold mb-3">{{ comunicado.titulo }}</h1>
+                    <p class="lead text-muted mb-4">{{ comunicado.extracto }}</p>
+                    {% if comunicado.imagen %}
+                        <img src="{{ comunicado.imagen.url }}" alt="{{ comunicado.titulo }}" class="detail-image mb-4">
+                    {% endif %}
+                    <div class="richtext-content">
+                        {{ comunicado.contenido|linebreaks }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</article>
+{% endblock %}

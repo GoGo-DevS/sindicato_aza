@@ -1,0 +1,100 @@
+:root {
+    --aza-primary: #0f4c5c;
+    --aza-secondary: #1f2937;
+    --aza-accent: #eab308;
+    --aza-light: #f8fafc;
+    --aza-border: #dbe2ea;
+    --aza-surface: #ffffff;
+    --aza-soft: #f3f7f8;
+    --color-primary: var(--aza-primary, #071b33);
+    --color-secondary: var(--aza-secondary, #ffffff);
+    --color-accent: var(--aza-accent, #ffc400);
+    --color-muted-bg: #f4f7fa;
+    --color-bg-soft: #f4f7fa;
+    --color-text: #0b1f3a;
+    --color-border: #d8e0e8;
+    --color-dark-surface: #081a31;
+    --color-dark-surface-2: #0d2747;
+}
+
+html {
+    min-height: 100%;
+}
+
+body {
+    min-height: 100vh;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--color-text);
+    background-color: #ffffff;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+main {
+    display: block;
+}
+
+.site-main {
+    overflow: hidden;
+}
+
+.py-lg-6 {
+    padding-top: 6rem !important;
+    padding-bottom: 6rem !important;
+}
+
+.container {
+    --bs-gutter-x: 1.5rem;
+}
+
+a {
+    color: var(--color-primary);
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: #0b294c;
+}
+
+.text-primary-soft {
+    color: rgba(7, 27, 51, 0.72);
+}
+
+.btn-primary {
+    --bs-btn-bg: var(--color-primary);
+    --bs-btn-border-color: var(--color-primary);
+    --bs-btn-hover-bg: #0b294c;
+    --bs-btn-hover-border-color: #0b294c;
+    --bs-btn-active-bg: #0b294c;
+    --bs-btn-active-border-color: #0b294c;
+}
+
+.btn-outline-primary {
+    --bs-btn-color: var(--color-primary);
+    --bs-btn-border-color: var(--color-primary);
+    --bs-btn-hover-bg: var(--color-primary);
+    --bs-btn-hover-border-color: var(--color-primary);
+    --bs-btn-active-bg: var(--color-primary);
+    --bs-btn-active-border-color: var(--color-primary);
+}
+
+.btn-accent {
+    --bs-btn-color: #071b33;
+    --bs-btn-bg: var(--color-accent);
+    --bs-btn-border-color: var(--color-accent);
+    --bs-btn-hover-color: #071b33;
+    --bs-btn-hover-bg: #eab100;
+    --bs-btn-hover-border-color: #eab100;
+    --bs-btn-active-color: #071b33;
+    --bs-btn-active-bg: #d9a300;
+    --bs-btn-active-border-color: #d9a300;
+    font-weight: 700;
+}
+
+.btn-lg {
+    --bs-btn-padding-y: 0.9rem;
+    --bs-btn-padding-x: 1.35rem;
+    --bs-btn-font-size: 1rem;
+    --bs-btn-border-radius: 0.9rem;
+}

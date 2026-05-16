@@ -1,0 +1,39 @@
+<footer class="site-footer py-5 mt-5">
+    <div class="container footer-container">
+        <div class="row g-4 align-items-start">
+            <div class="col-lg-5">
+                <p class="mb-2 fw-semibold footer-brand">{{ site_configuration.site_name|default:"Portal Institucional" }}</p>
+                <p class="mb-0 text-muted small">
+                    {{ site_configuration.site_tagline|default:"Portal institucional informativo y autoadministrable" }}
+                </p>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+                <p class="footer-title mb-2">Secciones</p>
+                <ul class="footer-links list-unstyled mb-0">
+                    <li><a href="{% url 'comunicados:list' %}">Comunicados</a></li>
+                    <li><a href="{% url 'documentos:list' %}">Documentos</a></li>
+                    <li><a href="{% url 'beneficios:list' %}">Beneficios</a></li>
+                    <li><a href="{% url 'contacto:index' %}">Contacto</a></li>
+                </ul>
+            </div>
+            <div class="col-sm-6 col-lg-4">
+                <p class="footer-title mb-2">Contacto</p>
+                <div class="footer-contact small">
+                    {% if site_configuration.contact_email %}
+                        <a class="text-decoration-none d-block" href="mailto:{{ site_configuration.contact_email }}">{{ site_configuration.contact_email }}</a>
+                    {% else %}
+                        <span class="text-muted d-block">Correo no configurado</span>
+                    {% endif %}
+                    {% if site_configuration.contact_phone %}
+                        <span class="text-muted d-block">{{ site_configuration.contact_phone }}</span>
+                    {% else %}
+                        <span class="text-muted d-block">Telefono no configurado</span>
+                    {% endif %}
+                    {% if site_configuration.address %}
+                        <span class="text-muted d-block">{{ site_configuration.address }}</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>

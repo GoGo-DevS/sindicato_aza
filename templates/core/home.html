@@ -1,0 +1,241 @@
+{% extends "base.html" %}
+
+{% block title %}Inicio | {{ site_configuration.site_name|default:"Portal Institucional" }}{% endblock %}
+
+{% block content %}
+<section class="hero-section py-5 py-lg-6">
+    <div class="container hero-container">
+        <div class="hero-shell row align-items-center g-4 g-lg-5">
+            <div class="col-lg-6 col-xl-7">
+                <div class="hero-copy">
+                    <span class="section-eyebrow hero-eyebrow">{{ site_configuration.site_name|default:"Portal Institucional" }}</span>
+                    <h1 class="fw-bold mb-3 hero-title">
+                        {{ site_configuration.hero_title|default:"Centraliza la informacion y mejora la comunicacion con tu comunidad" }}
+                    </h1>
+                    <p class="lead hero-description mb-4">
+                        {{ site_configuration.hero_text|default:"Portal institucional informativo y autoadministrable" }}
+                    </p>
+                    <div class="d-flex flex-wrap gap-3 hero-actions">
+                        <a class="btn btn-accent btn-lg" href="{% url 'comunicados:list' %}">Ver comunicados</a>
+                        <a class="btn btn-outline-light btn-lg" href="{% url 'contacto:index' %}">Contactar</a>
+                    </div>
+                    <div class="hero-metrics row g-3 mt-4">
+                        <div class="col-4">
+                            <div class="metric-card">
+                                <strong>{{ comunicados_destacados|length }}</strong>
+                                <span>Comunicados activos</span>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="metric-card">
+                                <strong>{{ documentos_destacados|length }}</strong>
+                                <span>Documentos clave</span>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="metric-card">
+                                <strong>{{ beneficios_destacados|length }}</strong>
+                                <span>Beneficios vigentes</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-xl-5">
+                <div class="hero-card hero-media-card">
+                    {% if site_configuration.hero_image %}
+                        <img src="{{ site_configuration.hero_image.url }}" alt="{{ site_configuration.hero_title|default:'Imagen principal' }}" class="img-fluid hero-image">
+                    {% else %}
+                        <div class="hero-placeholder-card">
+                            <h2 class="h4 mb-3">{{ site_configuration.site_name|default:"Portal Institucional" }}</h2>
+                            <p class="mb-0">Centraliza la informacion y mejora la comunicacion con tu comunidad.</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="hero-transition section-soft py-5 py-lg-6">
+    <div class="container hero-transition-container">
+        <div class="hero-transition-line"></div>
+    </div>
+</section>
+
+<section class="py-5 py-lg-6 section-soft">
+    <div class="container">
+        <div class="section-heading text-center mb-5">
+            <span class="section-eyebrow">Accesos directos</span>
+            <h2 class="h2 mb-2">Navegacion clara para contenido institucional</h2>
+            <p class="text-muted mb-0">Accede rapidamente a la informacion clave del portal desde cualquier dispositivo.</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <a class="info-card h-100 text-decoration-none d-block" href="{% url 'comunicados:list' %}">
+                    <span class="info-card-icon">01</span>
+                    <h2 class="h5">Comunicados</h2>
+                    <p class="text-muted mb-0">Noticias, avisos y actualizaciones relevantes para mantener informada a tu comunidad.</p>
+                    <span class="info-card-link">Explorar seccion</span>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a class="info-card h-100 text-decoration-none d-block" href="{% url 'documentos:list' %}">
+                    <span class="info-card-icon">02</span>
+                    <h2 class="h5">Documentos</h2>
+                    <p class="text-muted mb-0">Acceso rapido a reglamentos, archivos oficiales y material descargable desde un mismo lugar.</p>
+                    <span class="info-card-link">Ver documentos</span>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a class="info-card h-100 text-decoration-none d-block" href="{% url 'beneficios:list' %}">
+                    <span class="info-card-icon">03</span>
+                    <h2 class="h5">Beneficios</h2>
+                    <p class="text-muted mb-0">Informacion centralizada sobre convenios y beneficios vigentes disponibles para tus integrantes.</p>
+                    <span class="info-card-link">Revisar beneficios</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 py-lg-6">
+    <div class="container">
+        <div class="highlight-banner">
+            <div class="row align-items-center g-4">
+                <div class="col-lg-8">
+                    <span class="section-eyebrow mb-2">Gestion del sitio</span>
+                    <h2 class="h1 mb-2">{{ site_configuration.site_name|default:"Portal Institucional" }}</h2>
+                    <p class="text-muted mb-0">
+                        {{ site_configuration.meta_description|default:"Centraliza la informacion y mejora la comunicacion con tu comunidad" }}
+                    </p>
+                </div>
+                <div class="col-lg-4 text-lg-end">
+                    <a class="btn btn-primary btn-lg" href="{% url 'documentos:list' %}">Explorar documentos</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 py-lg-6 content-section">
+    <div class="container">
+        <div class="section-heading d-flex justify-content-between align-items-end gap-3 flex-wrap mb-4">
+            <div>
+                <span class="section-eyebrow">Actualidad</span>
+                <h2 class="h2 mb-0">Ultimos comunicados</h2>
+            </div>
+            <a class="btn btn-outline-primary" href="{% url 'comunicados:list' %}">Ver todos</a>
+        </div>
+        <div class="row g-4">
+            {% for comunicado in comunicados_destacados %}
+                <div class="col-md-6 col-xl-4">
+                    <article class="content-card content-card-feature h-100">
+                        <div class="content-card-body">
+                            <span class="badge text-bg-light mb-3">{{ comunicado.categoria }}</span>
+                            <h3 class="h5"><a class="stretched-link text-decoration-none" href="{% url 'comunicados:detail' comunicado.slug %}">{{ comunicado.titulo }}</a></h3>
+                            <p class="text-muted small mb-2">{{ comunicado.fecha_publicacion|date:"d M Y" }}</p>
+                            <p class="text-muted mb-0">{{ comunicado.extracto }}</p>
+                        </div>
+                    </article>
+                </div>
+            {% empty %}
+                <div class="col-12">
+                    <div class="empty-state">
+                        <p class="mb-0">Aun no hay comunicados publicados.</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="py-5 py-lg-6 section-soft content-section">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-lg-6">
+                <div class="section-heading mb-4">
+                    <span class="section-eyebrow">Descargas</span>
+                    <h2 class="h3 mb-0">Documentos destacados</h2>
+                </div>
+                <div class="list-group document-list premium-list">
+                    {% for documento in documentos_destacados %}
+                        <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="{{ documento.archivo.url }}" target="_blank" rel="noopener">
+                            <span>
+                                <strong class="d-block">{{ documento.titulo }}</strong>
+                                <small class="text-muted">{{ documento.categoria }}</small>
+                            </span>
+                            <span class="small text-muted">Descargar</span>
+                        </a>
+                    {% empty %}
+                        <div class="empty-state">
+                            <p class="mb-0">No hay documentos destacados por el momento.</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="section-heading mb-4">
+                    <span class="section-eyebrow">Convenios</span>
+                    <h2 class="h3 mb-0">Beneficios vigentes</h2>
+                </div>
+                <div class="row g-3">
+                    {% for beneficio in beneficios_destacados %}
+                        <div class="col-md-12">
+                            <article class="content-card content-card-compact content-card-feature h-100">
+                                <div class="content-card-body">
+                                    <h3 class="h5 mb-2">{{ beneficio.titulo }}</h3>
+                                    <p class="text-muted mb-0">{{ beneficio.descripcion_corta }}</p>
+                                </div>
+                            </article>
+                        </div>
+                    {% empty %}
+                        <div class="col-12">
+                            <div class="empty-state">
+                                <p class="mb-0">No hay beneficios cargados aun.</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 py-lg-6 content-section">
+    <div class="container">
+        <div class="section-heading d-flex justify-content-between align-items-end gap-3 flex-wrap mb-4">
+            <div>
+                <span class="section-eyebrow">Formacion</span>
+                <h2 class="h2 mb-0">Capacitaciones disponibles</h2>
+            </div>
+            <a class="btn btn-outline-primary" href="{% url 'capacitacion:list' %}">Ver todas las capacitaciones</a>
+        </div>
+        <div class="row g-4">
+            {% for cap in capacitaciones_destacadas %}
+                <div class="col-md-6 col-xl-4">
+                    <article class="content-card content-card-feature h-100">
+                        <div class="content-card-body">
+                            <div class="d-flex justify-content-between align-items-center gap-2 mb-3">
+                                <span class="badge text-bg-light">{{ cap.categoria }}</span>
+                                <span class="badge text-bg-secondary">{{ cap.get_modalidad_display }}</span>
+                            </div>
+                            <h3 class="h5 mb-2">
+                                <a class="stretched-link text-decoration-none" href="{% url 'capacitacion:detail' cap.slug %}">{{ cap.titulo }}</a>
+                            </h3>
+                            <p class="text-muted mb-2">{{ cap.descripcion_corta }}</p>
+                            <p class="small text-muted mb-0">{{ cap.fecha|date:"d M Y" }} &middot; {{ cap.duracion }}</p>
+                        </div>
+                    </article>
+                </div>
+            {% empty %}
+                <div class="col-12">
+                    <div class="empty-state">
+                        <p class="mb-0">Proximamente se publicaran capacitaciones para los socios.</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

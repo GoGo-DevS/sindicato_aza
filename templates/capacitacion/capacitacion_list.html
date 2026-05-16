@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}Capacitaciones | {{ site_configuration.site_name|default:"Portal Institucional" }}{% endblock %}
+
+{% block content %}
+<section class="page-header py-5">
+    <div class="container">
+        <span class="section-eyebrow">Formacion y desarrollo</span>
+        <h1 class="display-6 fw-bold mb-2">Capacitaciones disponibles</h1>
+        <p class="lead text-muted mb-0">Revisa las capacitaciones y talleres disponibles para los socios.</p>
+    </div>
+</section>
+
+{% if categorias %}
+<section class="py-3 section-soft border-bottom">
+    <div class="container">
+        <div class="d-flex flex-wrap gap-2 align-items-center">
+            <a class="btn btn-sm {% if not categoria_activa %}btn-primary{% else %}btn-outline-primary{% endif %}" href="{% url 'capacitacion:list' %}">Todas</a>
+            {% for cat in categorias %}
+                <a class="btn btn-sm {% if categoria_activa.slug == cat.slug %}btn-primary{% else %}btn-outline-primary{% endif %}"
+                   href="{% url 'capacitacion:list' %}?categoria={{ cat.slug }}">{{ cat.nombre }}</a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<section class="pb-5 pt-4">
+    <div class="container">
+        <div class="row g-4">
+            {% for cap in capacitaciones %}
+                <div class="col-md-6 col-xl-4">
+                    <article class="content-card h-100">
+                        {% if cap.imagen %}
+                            <img src="{{ cap.imagen.url }}" class="content-card-image" alt="{{ cap.titulo }}">
+                        {% endif %}
+                        <div class="content-card-body">
+                            <div class="d-flex justify-content-between align-items-center gap-2 mb-3">
+                                <span class="badge text-bg-light">{{ cap.categoria }}</span>
+                                <span class="badge text-bg-secondary">{{ cap.get_modalidad_display }}</span>
+                            </div>
+                            <h2 class="h5 mb-2">
+                                <a class="stretched-link text-decoration-none" href="{% url 'capacitacion:detail' cap.slug %}">{{ cap.titulo }}</a>
+                            </h2>
+                            <p class="text-muted mb-3">{{ cap.descripcion_corta }}</p>
+                            <ul class="list-unstyled small text-muted mb-0">
+                                <li><strong>Fecha:</strong> {{ cap.fecha|date:"d M Y" }}</li>
+                                <li><strong>Duracion:</strong> {{ cap.duracion }}</li>
+                                {% if cap.cupos > 0 %}
+                                    <li><strong>Cupos:</strong> {{ cap.cupos }}</li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </article>
+                </div>
+            {% empty %}
+                <div class="col-12">
+                    <div class="empty-state">
+                        <h2 class="h5">No hay capacitaciones disponibles</h2>
+                        <p class="mb-0 text-muted">Las capacitaciones activas apareceran aqui cuando sean publicadas.</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

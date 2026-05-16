@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Comunicados | {{ site_configuration.site_name|default:"Portal Institucional" }}{% endblock %}
+
+{% block content %}
+<section class="page-header py-5">
+    <div class="container">
+        <span class="section-eyebrow">Informacion institucional</span>
+        <h1 class="display-6 fw-bold mb-2">Comunicados</h1>
+        <p class="lead text-muted mb-0">Publicaciones oficiales, avisos y novedades del sindicato.</p>
+    </div>
+</section>
+
+<section class="pb-5">
+    <div class="container">
+        <div class="row g-4">
+            {% for comunicado in comunicados %}
+                <div class="col-md-6 col-xl-4">
+                    <article class="content-card h-100 position-relative">
+                        {% if comunicado.imagen %}
+                            <img src="{{ comunicado.imagen.url }}" class="content-card-image" alt="{{ comunicado.titulo }}">
+                        {% endif %}
+                        <div class="content-card-body">
+                            <div class="d-flex justify-content-between align-items-center gap-2 mb-3">
+                                <span class="badge text-bg-light">{{ comunicado.categoria }}</span>
+                                {% if comunicado.destacado %}
+                                    <span class="badge text-bg-warning">Destacado</span>
+                                {% endif %}
+                            </div>
+                            <h2 class="h5">
+                                <a class="stretched-link text-decoration-none" href="{% url 'comunicados:detail' comunicado.slug %}">{{ comunicado.titulo }}</a>
+                            </h2>
+                            <p class="text-muted small mb-3">{{ comunicado.fecha_publicacion|date:"d M Y" }}</p>
+                            <p class="text-muted mb-0">{{ comunicado.extracto }}</p>
+                        </div>
+                    </article>
+                </div>
+            {% empty %}
+                <div class="col-12">
+                    <div class="empty-state">
+                        <h2 class="h5">No hay comunicados disponibles</h2>
+                        <p class="mb-0 text-muted">Cuando existan publicaciones visibles, apareceran aqui.</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

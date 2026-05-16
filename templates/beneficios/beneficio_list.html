@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Beneficios | {{ site_configuration.site_name|default:"Portal Institucional" }}{% endblock %}
+
+{% block content %}
+<section class="page-header py-5">
+    <div class="container">
+        <span class="section-eyebrow">Convenios y apoyo</span>
+        <h1 class="display-6 fw-bold mb-2">Beneficios</h1>
+        <p class="lead text-muted mb-0">Revisa los beneficios disponibles para tu comunidad.</p>
+    </div>
+</section>
+
+<section class="pb-5">
+    <div class="container">
+        <div class="row g-4">
+            {% for beneficio in beneficios %}
+                <div class="col-md-6 col-xl-4">
+                    <article class="content-card h-100">
+                        {% if beneficio.imagen %}
+                            <img src="{{ beneficio.imagen.url }}" class="content-card-image" alt="{{ beneficio.titulo }}">
+                        {% endif %}
+                        <div class="content-card-body">
+                            <div class="d-flex justify-content-between align-items-center gap-2 mb-3">
+                                <span class="badge text-bg-light">{{ beneficio.categoria }}</span>
+                                {% if beneficio.destacado %}
+                                    <span class="badge text-bg-warning">Destacado</span>
+                                {% endif %}
+                            </div>
+                            <h2 class="h5 mb-2">{{ beneficio.titulo }}</h2>
+                            <p class="text-muted mb-3">{{ beneficio.descripcion_corta }}</p>
+                            <p class="text-muted">{{ beneficio.contenido|truncatewords:35 }}</p>
+                            {% if beneficio.vigencia %}
+                                <p class="small text-muted mb-0">Vigente hasta el {{ beneficio.vigencia|date:"d M Y" }}</p>
+                            {% endif %}
+                        </div>
+                    </article>
+                </div>
+            {% empty %}
+                <div class="col-12">
+                    <div class="empty-state">
+                        <h2 class="h5">No hay beneficios disponibles</h2>
+                        <p class="mb-0 text-muted">Los beneficios activos apareceran aqui cuando sean publicados.</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

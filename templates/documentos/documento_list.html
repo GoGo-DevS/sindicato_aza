@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Documentos | {{ site_configuration.site_name|default:"Portal Institucional" }}{% endblock %}
+
+{% block content %}
+<section class="page-header py-5">
+    <div class="container">
+        <span class="section-eyebrow">Repositorio institucional</span>
+        <h1 class="display-6 fw-bold mb-2">Documentos</h1>
+        <p class="lead text-muted mb-0">Accede a archivos oficiales y material descargable.</p>
+    </div>
+</section>
+
+<section class="pb-5">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-lg-3">
+                <div class="filter-card">
+                    <h2 class="h6 mb-3">Filtrar por categoria</h2>
+                    <div class="list-group">
+                        <a href="{% url 'documentos:list' %}" class="list-group-item list-group-item-action {% if not categoria_actual %}active{% endif %}">
+                            Todas
+                        </a>
+                        {% for categoria in categorias %}
+                            <a href="{% url 'documentos:list' %}?categoria={{ categoria.slug }}" class="list-group-item list-group-item-action {% if categoria_actual and categoria_actual.pk == categoria.pk %}active{% endif %}">
+                                {{ categoria.nombre }}
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <div class="row g-3">
+                    {% for documento in documentos %}
+                        <div class="col-md-6">
+                            <article class="document-card h-100">
+                                <div class="d-flex justify-content-between align-items-start gap-3 mb-3">
+                                    <div>
+                                        <span class="badge text-bg-light mb-2">{{ documento.categoria }}</span>
+                                        <h2 class="h5 mb-1">{{ documento.titulo }}</h2>
+                                        <p class="small text-muted mb-0">{{ documento.fecha|date:"d M Y" }}</p>
+                                    </div>
+                                    {% if documento.destacado %}
+                                        <span class="badge text-bg-warning">Destacado</span>
+                                    {% endif %}
+                                </div>
+                                {% if documento.descripcion %}
+                                    <p class="text-muted">{{ documento.descripcion }}</p>
+                                {% endif %}
+                                <a class="btn btn-outline-primary mt-auto" href="{{ documento.archivo.url }}" target="_blank" rel="noopener">Descargar documento</a>
+                            </article>
+                        </div>
+                    {% empty %}
+                        <div class="col-12">
+                            <div class="empty-state">
+                                <h2 class="h5">No se encontraron documentos</h2>
+                                <p class="mb-0 text-muted">Prueba con otra categoria o vuelve mas tarde.</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

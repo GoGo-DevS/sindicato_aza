@@ -1,0 +1,40 @@
+<header class="site-header">
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container header-container">
+            <a class="navbar-brand fw-semibold d-flex align-items-center gap-3" href="{% url 'core:home' %}">
+                {% if site_configuration.logo %}
+                    <img src="{{ site_configuration.logo.url }}" alt="{{ site_configuration.site_name }}" class="site-logo">
+                {% endif %}
+                <span class="site-brand-text">{{ site_configuration.site_name|default:"Portal Institucional" }}</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Abrir navegacion">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNavbar">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'core:home' %}">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'comunicados:list' %}">Comunicados</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'documentos:list' %}">Documentos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'beneficios:list' %}">Beneficios</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'capacitacion:list' %}">Capacitacion</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'contacto:index' %}">Contacto</a>
+                    </li>
+                    <li class="nav-item ms-lg-2">
+                        <a class="btn btn-primary btn-sm px-3" href="{% url 'contacto:index' %}">Escribenos</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>

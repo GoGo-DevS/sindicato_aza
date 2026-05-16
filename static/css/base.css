@@ -315,7 +315,13 @@ a:hover { color: var(--aza-verde); }
 
 .navbar-logo-container img {
     height: 42px;
-    width: auto;
+    width: 42px;
+    object-fit: contain;
+    border-radius: 10px;
+    padding: 6px;
+    background: var(--aza-verde);
+    box-shadow: 0 2px 8px rgba(46, 125, 50, 0.28);
+    filter: brightness(0) invert(1);
 }
 
 .navbar-logo-text {

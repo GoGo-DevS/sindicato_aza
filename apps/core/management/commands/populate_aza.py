@@ -4,7 +4,7 @@ from django.core.management.base import BaseCommand
 from django.utils import timezone
 
 from apps.beneficios.models import Beneficio, CategoriaBeneficio
-from apps.capacitacion.models import Capacitacion, CategoriaCapacitacion
+from apps.capacitacion.models import RecursoAyuda
 from apps.comunicados.models import CategoriaComunicado, Comunicado
 from apps.documentos.models import CategoriaDocumento, Documento
 
@@ -16,7 +16,7 @@ class Command(BaseCommand):
         self.create_comunicados()
         self.create_documentos()
         self.create_beneficios()
-        self.create_capacitaciones()
+        self.create_recursos_ayuda()
         self.stdout.write(self.style.SUCCESS("Datos AZA cargados correctamente."))
 
     def create_comunicados(self):
@@ -208,74 +208,39 @@ class Command(BaseCommand):
             Beneficio.objects.get_or_create(slug=item["slug"], defaults=item)
         self.stdout.write("  Beneficios AZA listos.")
 
-    def create_capacitaciones(self):
-        categorias_data = [
-            ("Tecnica", "Capacitaciones de habilidades tecnicas y operativas."),
-            ("Liderazgo", "Desarrollo de habilidades de liderazgo y gestion."),
-            ("Seguridad", "Capacitaciones en seguridad y salud ocupacional."),
-        ]
-        cat_map = {}
-        for nombre, desc in categorias_data:
-            cat, _ = CategoriaCapacitacion.objects.get_or_create(
-                nombre=nombre,
-                defaults={"descripcion": desc, "activo": True},
-            )
-            cat_map[nombre] = cat
-
+    def create_recursos_ayuda(self):
         today = timezone.localdate()
-        capacitaciones = [
+        recursos = [
             {
-                "categoria": cat_map["Tecnica"],
-                "titulo": "Manejo de herramientas digitales para el trabajo",
-                "slug": "manejo-herramientas-digitales-trabajo",
-                "descripcion_corta": "Curso practico sobre uso de plataformas digitales en el entorno laboral.",
-                "contenido": (
-                    "Este curso cubre el uso de herramientas digitales de uso frecuente en el trabajo: "
-                    "hojas de calculo, procesadores de texto, correo electronico y plataformas colaborativas. "
-                    "Orientado a socios que quieran mejorar su productividad digital."
-                ),
-                "modalidad": "presencial",
-                "duracion": "8 horas",
-                "fecha": today + timedelta(days=14),
-                "cupos": 20,
-                "activo": True,
-                "destacado": True,
+                "titulo":      "Como publicar un comunicado",
+                "descripcion": "Aprende a crear, editar y publicar comunicados desde el panel de administracion.",
+                "tipo":        "video",
+                "url_video":   "https://youtube.com",
+                "activo":      True,
+                "orden":       1,
             },
             {
-                "categoria": cat_map["Liderazgo"],
-                "titulo": "Liderazgo sindical y representacion efectiva",
-                "slug": "liderazgo-sindical-representacion-efectiva",
-                "descripcion_corta": "Taller para dirigentes y socios interesados en fortalecer la representacion sindical.",
-                "contenido": (
-                    "Taller intensivo sobre comunicacion efectiva, negociacion, gestion de conflictos "
-                    "y representacion sindical. Incluye casos practicos y metodologias participativas."
-                ),
-                "modalidad": "hibrida",
-                "duracion": "16 horas",
-                "fecha": today + timedelta(days=21),
-                "cupos": 15,
-                "activo": True,
-                "destacado": True,
+                "titulo":      "Manual de administracion",
+                "descripcion": "Guia completa del portal: modulos, permisos, configuracion y gestion de contenido.",
+                "tipo":        "pdf",
+                "activo":      True,
+                "orden":       2,
             },
             {
-                "categoria": cat_map["Seguridad"],
-                "titulo": "Prevencion de riesgos en el lugar de trabajo",
-                "slug": "prevencion-riesgos-lugar-trabajo",
-                "descripcion_corta": "Capacitacion obligatoria en seguridad y salud ocupacional segun normativa vigente.",
-                "contenido": (
-                    "Capacitacion en identificacion de riesgos, uso de elementos de proteccion personal, "
-                    "procedimientos de emergencia y normativa legal aplicable. "
-                    "Certificacion incluida al finalizar el curso."
-                ),
-                "modalidad": "online",
-                "duracion": "4 horas",
-                "fecha": today + timedelta(days=7),
-                "cupos": 50,
-                "activo": True,
-                "destacado": True,
+                "titulo":      "Capacitacion inicial GoGoDevS",
+                "descripcion": "Sesion presencial de entrega y capacitacion sobre el uso de la plataforma.",
+                "tipo":        "presencial",
+                "fecha_presencial": today,
+                "lugar":       "Instalaciones AZA",
+                "activo":      True,
+                "orden":       3,
             },
         ]
 
-        for item in capacitaciones:
-            Capacitacion.objects.get_or_create(slug=item["slug"], defaults=item)
-        self.stdout.write("  Capacitaciones AZA listas.")
+        for item in recursos:
+            RecursoAyuda.objects.get_or_create(
+                titulo=item["titulo"],
+                tipo=item["tipo"],
+                defaults=item,
+            )
+        self.stdout.write("  Recursos de ayuda listos.")

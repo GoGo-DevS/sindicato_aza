@@ -30,6 +30,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'contacto:index' %}">Contacto</a>
                     </li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'capacitacion:list' %}">Centro de Ayuda</a>
+                    </li>
+                    {% endif %}
                     <li class="nav-item ms-lg-2">
                         <a class="btn btn-primary btn-sm px-4" href="{% url 'contacto:index' %}">Contactar</a>
                     </li>

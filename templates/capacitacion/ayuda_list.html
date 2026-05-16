@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+
+{% block title %}Centro de Ayuda | {{ site_configuration.site_name|default:"Portal Institucional" }}{% endblock %}
+
+{% block content %}
+
+<!-- Cabecera -->
+<section class="page-header py-5">
+    <div class="container">
+        <span class="section-eyebrow">GoGoDevS</span>
+        <h1 class="display-6 fw-bold mb-2">Centro de Ayuda</h1>
+        <p class="lead text-muted mb-0">Recursos para administrar tu plataforma</p>
+    </div>
+</section>
+
+<!-- Contenido principal -->
+<section class="py-5 content-section">
+    <div class="container">
+
+        {% if total == 0 %}
+            <div class="empty-state">
+                <i class="bi bi-book fs-1 text-aza-verde mb-3 d-block"></i>
+                <h2 class="h5">Sin recursos disponibles aun</h2>
+                <p class="mb-0 text-muted">Los recursos de capacitacion estaran disponibles proximamente.</p>
+            </div>
+        {% else %}
+
+            <!-- Videos tutoriales -->
+            {% if videos %}
+            <div class="mb-5 reveal">
+                <div class="d-flex align-items-center gap-2 mb-4">
+                    <span class="fs-4">🎥</span>
+                    <h2 class="h4 mb-0">Videos tutoriales</h2>
+                    <span class="badge-aza ms-1">{{ videos.count }}</span>
+                </div>
+                <div class="row g-4">
+                    {% for recurso in videos %}
+                    <div class="col-md-6 col-lg-4 reveal">
+                        <div class="content-card content-card-feature h-100">
+                            <!-- Thumbnail placeholder -->
+                            <div class="comunicado-card-image">
+                                <i class="bi bi-play-circle-fill"></i>
+                            </div>
+                            <div class="content-card-body">
+                                <h3 class="h5 mb-2">{{ recurso.titulo }}</h3>
+                                {% if recurso.descripcion %}
+                                    <p class="text-muted small mb-3">{{ recurso.descripcion }}</p>
+                                {% endif %}
+                                {% if recurso.url_video %}
+                                    <a href="{{ recurso.url_video }}" target="_blank" rel="noopener"
+                                       class="btn btn-aza-primary btn-sm">
+                                        <i class="bi bi-play-fill me-1"></i> Ver video
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Instructivos PDF -->
+            {% if pdfs %}
+            <div class="mb-5 reveal">
+                <div class="d-flex align-items-center gap-2 mb-4">
+                    <span class="fs-4">📄</span>
+                    <h2 class="h4 mb-0">Instructivos PDF</h2>
+                    <span class="badge-aza ms-1">{{ pdfs.count }}</span>
+                </div>
+                <div class="row g-4">
+                    {% for recurso in pdfs %}
+                    <div class="col-md-6 col-lg-4 reveal">
+                        <div class="content-card content-card-feature h-100">
+                            <div class="content-card-body">
+                                <div class="beneficio-card-icon mb-3">
+                                    <i class="bi bi-file-earmark-pdf"></i>
+                                </div>
+                                <h3 class="h5 mb-2">{{ recurso.titulo }}</h3>
+                                {% if recurso.descripcion %}
+                                    <p class="text-muted small mb-3">{{ recurso.descripcion }}</p>
+                                {% endif %}
+                                {% if recurso.archivo %}
+                                    <a href="{{ recurso.archivo.url }}" target="_blank" rel="noopener"
+                                       class="btn btn-aza-outline btn-sm">
+                                        <i class="bi bi-download me-1"></i> Descargar
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Guias rapidas -->
+            {% if guias %}
+            <div class="mb-5 reveal">
+                <div class="d-flex align-items-center gap-2 mb-4">
+                    <span class="fs-4">📋</span>
+                    <h2 class="h4 mb-0">Guias rapidas</h2>
+                    <span class="badge-aza ms-1">{{ guias.count }}</span>
+                </div>
+                <div class="row g-4">
+                    {% for recurso in guias %}
+                    <div class="col-md-6 col-lg-4 reveal">
+                        <div class="content-card content-card-feature h-100">
+                            <div class="content-card-body">
+                                <div class="beneficio-card-icon mb-3">
+                                    <i class="bi bi-journal-text"></i>
+                                </div>
+                                <h3 class="h5 mb-2">{{ recurso.titulo }}</h3>
+                                {% if recurso.descripcion %}
+                                    <p class="text-muted small mb-3">{{ recurso.descripcion }}</p>
+                                {% endif %}
+                                {% if recurso.archivo %}
+                                    <a href="{{ recurso.archivo.url }}" target="_blank" rel="noopener"
+                                       class="btn btn-aza-outline btn-sm">
+                                        <i class="bi bi-eye me-1"></i> Ver guia
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Capacitaciones presenciales -->
+            {% if presenciales %}
+            <div class="mb-5 reveal">
+                <div class="d-flex align-items-center gap-2 mb-4">
+                    <span class="fs-4">🗓</span>
+                    <h2 class="h4 mb-0">Capacitaciones presenciales</h2>
+                    <span class="badge-aza ms-1">{{ presenciales.count }}</span>
+                </div>
+                <div class="row g-4">
+                    {% for recurso in presenciales %}
+                    <div class="col-md-6 col-lg-4 reveal">
+                        <div class="info-card h-100">
+                            <h3 class="h5 mb-2">{{ recurso.titulo }}</h3>
+                            {% if recurso.descripcion %}
+                                <p class="text-muted small mb-3">{{ recurso.descripcion }}</p>
+                            {% endif %}
+                            <ul class="list-unstyled small mb-0">
+                                {% if recurso.fecha_presencial %}
+                                <li class="mb-1">
+                                    <i class="bi bi-calendar3 me-2 text-aza-verde"></i>
+                                    <strong>Fecha:</strong> {{ recurso.fecha_presencial|date:"d \d\e F \d\e Y" }}
+                                </li>
+                                {% endif %}
+                                {% if recurso.lugar %}
+                                <li>
+                                    <i class="bi bi-geo-alt me-2 text-aza-verde"></i>
+                                    <strong>Lugar:</strong> {{ recurso.lugar }}
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+        {% endif %}
+
+    </div>
+</section>
+{% endblock %}

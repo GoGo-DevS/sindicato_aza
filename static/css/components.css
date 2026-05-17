@@ -48,8 +48,9 @@
 }
 
 .site-logo {
-    height: 46px;
+    height: 52px;
     width: auto;
+    max-width: 200px;
     object-fit: contain;
     display: block;
 }

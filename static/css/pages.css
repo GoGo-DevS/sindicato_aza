@@ -228,7 +228,7 @@
     }
 
     /* Logo mas compacto en mobile */
-    .site-logo { max-height: 40px; }
+    .site-logo { height: 38px; max-width: 150px; }
 
     /* Brand mas compacto en mobile */
     .site-brand-text {

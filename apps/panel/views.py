@@ -1,6 +1,7 @@
 from functools import wraps
 
 from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.text import slugify
 
@@ -8,6 +9,7 @@ from apps.beneficios.models import Beneficio
 from apps.comunicados.models import Comunicado
 from apps.contacto.models import MensajeContacto
 from apps.documentos.models import Documento
+from apps.siteconfig.models import SiteConfiguration
 
 from .forms import BeneficioForm, ComunicadoForm, DocumentoForm
 
@@ -18,11 +20,45 @@ def staff_required(view_func):
     @wraps(view_func)
     def wrapper(request, *args, **kwargs):
         if not request.user.is_authenticated:
-            return redirect(f"/admin/login/?next={request.path}")
+            return redirect(f"/panel/login/?next={request.path}")
         if not request.user.is_staff:
-            return redirect("/admin/login/")
+            return redirect("/panel/login/")
         return view_func(request, *args, **kwargs)
     return wrapper
+
+
+# ── Login / Logout ───────────────────────────────────────────────────────────
+
+def panel_login(request):
+    if request.user.is_authenticated and request.user.is_staff:
+        return redirect("/panel/")
+
+    error = None
+    next_url = request.GET.get("next") or request.POST.get("next") or "/panel/"
+
+    if request.method == "POST":
+        username = request.POST.get("username", "").strip()
+        password = request.POST.get("password", "")
+        user = authenticate(request, username=username, password=password)
+        if user is not None and user.is_staff:
+            login(request, user)
+            return redirect(next_url)
+        elif user is not None:
+            error = "Su cuenta no tiene permisos para acceder al panel de administracion."
+        else:
+            error = "Usuario o contrasena incorrectos. Por favor intente nuevamente."
+
+    site_config = SiteConfiguration.get_solo()
+    return render(request, "panel/login.html", {
+        "error": error,
+        "next": next_url,
+        "site_config": site_config,
+    })
+
+
+def panel_logout(request):
+    logout(request)
+    return redirect("/panel/login/")
 
 
 # ── Helpers ──────────────────────────────────────────────────────────────────

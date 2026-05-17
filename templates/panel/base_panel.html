@@ -257,9 +257,12 @@
         <span class="p-user d-none d-sm-inline">
             <i class="bi bi-person-circle me-1"></i>{{ request.user.get_full_name|default:request.user.username }}
         </span>
-        <a href="/admin/logout/?next=/" class="btn-p-gris btn-p-sm">
-            <i class="bi bi-box-arrow-right"></i>Salir
-        </a>
+        <form method="post" action="{% url 'panel:logout' %}" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn-p-gris btn-p-sm">
+                <i class="bi bi-box-arrow-right"></i>Salir
+            </button>
+        </form>
     </div>
 </div>
 

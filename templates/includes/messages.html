@@ -1,10 +1,35 @@
 {% if messages %}
-    <div class="container pt-4">
+    <div class="container pt-4" role="region" aria-label="Notificaciones">
         {% for message in messages %}
-            <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show" role="alert">
-                {{ message }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
-            </div>
+            {% if message.tags == 'success' %}
+                <div class="alert alert-dismissible fade show d-flex align-items-center gap-3 mb-3" role="alert"
+                     style="background:linear-gradient(135deg,#E8F5E9,#F1F8E9);border-left:4px solid #2E7D32;border-radius:1rem;border-color:#2E7D32;">
+                    <i class="bi bi-check-circle-fill fs-5" style="color:#2E7D32;flex-shrink:0;"></i>
+                    <span style="color:#1B5E20;font-weight:600;">{{ message }}</span>
+                    <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+                </div>
+            {% elif message.tags == 'error' or message.tags == 'danger' %}
+                <div class="alert alert-dismissible fade show d-flex align-items-center gap-3 mb-3" role="alert"
+                     style="background:linear-gradient(135deg,#FFEBEE,#FFF3F3);border-left:4px solid #C62828;border-radius:1rem;border-color:#C62828;">
+                    <i class="bi bi-x-circle-fill fs-5" style="color:#C62828;flex-shrink:0;"></i>
+                    <span style="color:#B71C1C;font-weight:600;">{{ message }}</span>
+                    <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+                </div>
+            {% elif message.tags == 'warning' %}
+                <div class="alert alert-dismissible fade show d-flex align-items-center gap-3 mb-3" role="alert"
+                     style="background:linear-gradient(135deg,#FFF8E1,#FFFDE7);border-left:4px solid #F57F17;border-radius:1rem;border-color:#F57F17;">
+                    <i class="bi bi-exclamation-triangle-fill fs-5" style="color:#F57F17;flex-shrink:0;"></i>
+                    <span style="color:#E65100;font-weight:600;">{{ message }}</span>
+                    <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+                </div>
+            {% else %}
+                <div class="alert alert-dismissible fade show d-flex align-items-center gap-3 mb-3" role="alert"
+                     style="background:linear-gradient(135deg,#E3F2FD,#E8F5E9);border-left:4px solid #1565C0;border-radius:1rem;border-color:#1565C0;">
+                    <i class="bi bi-info-circle-fill fs-5" style="color:#1565C0;flex-shrink:0;"></i>
+                    <span style="color:#0D47A1;font-weight:600;">{{ message }}</span>
+                    <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+                </div>
+            {% endif %}
         {% endfor %}
     </div>
 {% endif %}

@@ -11,21 +11,38 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        now = timezone.now()
+
+        comunicados_qs = Comunicado.objects.filter(
+            publicado=True, fecha_publicacion__lte=now
+        )
+        documentos_qs = Documento.objects.filter(
+            publico=True, categoria__activo=True
+        )
+        beneficios_qs = Beneficio.objects.filter(
+            activo=True, categoria__activo=True
+        )
+
         context["comunicados_destacados"] = (
-            Comunicado.objects.select_related("categoria")
-            .filter(publicado=True, fecha_publicacion__lte=timezone.now())
+            comunicados_qs
+            .select_related("categoria")
             .order_by("-destacado", "-fecha_publicacion")[:3]
         )
         context["documentos_destacados"] = (
-            Documento.objects.select_related("categoria")
-            .filter(publico=True, destacado=True, categoria__activo=True)
+            documentos_qs
+            .select_related("categoria")
+            .filter(destacado=True)
             .order_by("-fecha", "titulo")[:4]
         )
         context["beneficios_destacados"] = (
-            Beneficio.objects.select_related("categoria")
-            .filter(activo=True, destacado=True, categoria__activo=True)
+            beneficios_qs
+            .select_related("categoria")
+            .filter(destacado=True)
             .order_by("vigencia", "titulo")[:3]
         )
-        # Centro de Ayuda es solo para admins autenticados — no aparece en home
-        context["capacitaciones_destacadas"] = []
+
+        context["total_comunicados"] = comunicados_qs.count()
+        context["total_documentos"] = documentos_qs.count()
+        context["total_beneficios"] = beneficios_qs.count()
+
         return context

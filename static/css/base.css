@@ -313,25 +313,37 @@ a:hover { color: var(--aza-verde); }
     gap: 10px;
 }
 
+.navbar-logo-container img {
+    height: 44px;
+    width: auto;
+}
+
 .navbar-logo-text {
     display: flex;
     flex-direction: column;
-    line-height: 1.15;
+    line-height: 1.1;
 }
 
-.logo-text-main {
+.logo-text-sindicato {
     font-family: 'Montserrat', sans-serif;
-    font-size: 1.45rem;
-    font-weight: 800;
-    color: var(--aza-gris-oscuro);
-    letter-spacing: 0.03em;
-    line-height: 1;
-}
-
-.logo-text-accent {
-    font-family: 'Open Sans', sans-serif;
     font-size: 0.68rem;
     font-weight: 600;
-    color: var(--aza-gris-medio);
-    letter-spacing: 0.04em;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #546E7A;
+}
+
+.logo-text-aza {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #2E7D32;
+    letter-spacing: 0.02em;
+}
+
+/* Accesibilidad: focus visible en todos los elementos interactivos */
+:focus-visible {
+    outline: 3px solid var(--aza-verde);
+    outline-offset: 2px;
+    border-radius: 4px;
 }

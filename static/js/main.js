@@ -1,6 +1,6 @@
 /* ============================================================
    SINDICATO AZA — main.js
-   Navbar scroll, active links, scroll reveal
+   Navbar scroll, active links, scroll reveal, hamburger close
    Desarrollado por GoGoDevS
 ============================================================ */
 
@@ -33,6 +33,19 @@ document.addEventListener("DOMContentLoaded", function () {
         handleScroll();
     }
 
+    // --- Cerrar hamburger al hacer click en un link (mobile) ---
+    const navbarCollapse = document.querySelector("#mainNavbar");
+    if (navbarCollapse) {
+        navbarCollapse.querySelectorAll(".nav-link").forEach(link => {
+            link.addEventListener("click", () => {
+                if (navbarCollapse.classList.contains("show")) {
+                    const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse);
+                    if (bsCollapse) bsCollapse.hide();
+                }
+            });
+        });
+    }
+
     // --- Active link segun URL actual ---
     const currentPath = window.location.pathname;
     document.querySelectorAll(".site-header .nav-link").forEach(link => {
@@ -63,7 +76,6 @@ document.addEventListener("DOMContentLoaded", function () {
         );
         revealEls.forEach(el => observer.observe(el));
     } else {
-        // Fallback: mostrar todo si no hay soporte
         revealEls.forEach(el => el.classList.add("revealed"));
     }
 
@@ -74,6 +86,18 @@ document.addEventListener("DOMContentLoaded", function () {
             if (target) {
                 e.preventDefault();
                 target.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
+        });
+    });
+
+    // --- Botones submit: deshabilitar durante envio ---
+    document.querySelectorAll("form").forEach(form => {
+        form.addEventListener("submit", function () {
+            const btn = form.querySelector('[type="submit"]');
+            if (btn) {
+                btn.disabled = true;
+                btn.dataset.originalText = btn.textContent;
+                btn.textContent = "Enviando…";
             }
         });
     });

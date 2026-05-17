@@ -1,46 +1,57 @@
 {% extends "base.html" %}
 
-{% block title %}Beneficios | {{ site_configuration.site_name|default:"Portal Institucional" }}{% endblock %}
+{% block title %}Beneficios | {{ site_configuration.site_name|default:"Sindicato Unificado AZA" }}{% endblock %}
+{% block og_title %}Beneficios — Sindicato Unificado AZA{% endblock %}
+{% block og_description %}Revisa los beneficios y convenios disponibles para los socios del Sindicato Unificado AZA.{% endblock %}
 
 {% block content %}
 <section class="page-header py-5">
     <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-2">
+                <li class="breadcrumb-item"><a href="{% url 'core:home' %}">Inicio</a></li>
+                <li class="breadcrumb-item active">Beneficios</li>
+            </ol>
+        </nav>
         <span class="section-eyebrow">Convenios y apoyo</span>
         <h1 class="display-6 fw-bold mb-2">Beneficios</h1>
-        <p class="lead text-muted mb-0">Revisa los beneficios disponibles para tu comunidad.</p>
+        <p class="lead text-muted mb-0">Revisa los beneficios disponibles para todos los socios.</p>
     </div>
 </section>
 
-<section class="pb-5">
+<section class="pb-5 pt-4">
     <div class="container">
         <div class="row g-4">
             {% for beneficio in beneficios %}
-                <div class="col-md-6 col-xl-4">
-                    <article class="content-card h-100">
-                        {% if beneficio.imagen %}
-                            <img src="{{ beneficio.imagen.url }}" class="content-card-image" alt="{{ beneficio.titulo }}">
-                        {% endif %}
-                        <div class="content-card-body">
-                            <div class="d-flex justify-content-between align-items-center gap-2 mb-3">
-                                <span class="badge text-bg-light">{{ beneficio.categoria }}</span>
-                                {% if beneficio.destacado %}
-                                    <span class="badge text-bg-warning">Destacado</span>
-                                {% endif %}
+                <div class="col-md-6 col-xl-4 reveal">
+                    <article class="beneficio-card h-100">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div class="beneficio-card-icon">
+                                <i class="bi bi-gift"></i>
                             </div>
-                            <h2 class="h5 mb-2">{{ beneficio.titulo }}</h2>
-                            <p class="text-muted mb-3">{{ beneficio.descripcion_corta }}</p>
-                            <p class="text-muted">{{ beneficio.contenido|truncatewords:35 }}</p>
-                            {% if beneficio.vigencia %}
-                                <p class="small text-muted mb-0">Vigente hasta el {{ beneficio.vigencia|date:"d M Y" }}</p>
-                            {% endif %}
+                            <div class="d-flex flex-column align-items-end gap-1">
+                                <span class="badge text-bg-light">{{ beneficio.categoria }}</span>
+                                <span class="beneficio-card-badge">Vigente</span>
+                            </div>
                         </div>
+                        {% if beneficio.imagen %}
+                            <img src="{{ beneficio.imagen.url }}" class="img-fluid rounded mb-3" alt="{{ beneficio.titulo }}" loading="lazy" style="width:100%;height:160px;object-fit:cover;">
+                        {% endif %}
+                        <h2 class="h5 mb-2">{{ beneficio.titulo }}</h2>
+                        <p class="text-muted mb-3">{{ beneficio.descripcion_corta }}</p>
+                        {% if beneficio.vigencia %}
+                            <p class="small mb-0" style="color:var(--aza-gris-medio);">
+                                <i class="bi bi-calendar-check me-1" style="color:var(--aza-verde);"></i>
+                                Vigente hasta {{ beneficio.vigencia|date:"d \d\e M \d\e Y" }}
+                            </p>
+                        {% endif %}
                     </article>
                 </div>
             {% empty %}
                 <div class="col-12">
                     <div class="empty-state">
                         <h2 class="h5">No hay beneficios disponibles</h2>
-                        <p class="mb-0 text-muted">Los beneficios activos apareceran aqui cuando sean publicados.</p>
+                        <p class="mb-0 text-muted">Los beneficios activos aparecerán aquí cuando sean publicados.</p>
                     </div>
                 </div>
             {% endfor %}

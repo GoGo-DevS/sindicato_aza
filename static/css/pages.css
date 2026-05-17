@@ -42,6 +42,48 @@
 .section-soft { background-color: var(--aza-gris-claro); }
 
 /* ============================================================
+   BREADCRUMB
+============================================================ */
+.breadcrumb { font-size: 0.85rem; }
+.breadcrumb-item a { color: var(--aza-verde); text-decoration: none; }
+.breadcrumb-item a:hover { text-decoration: underline; }
+.breadcrumb-item.active { color: var(--aza-gris-medio); }
+.breadcrumb-item + .breadcrumb-item::before { color: var(--aza-gris-medio); }
+
+/* ============================================================
+   HERO — BOTÓN OUTLINE LIGHT sobre fondo oscuro
+============================================================ */
+.hero-section .btn-outline-light {
+    --bs-btn-color: #ffffff;
+    --bs-btn-border-color: rgba(255,255,255,0.75);
+    --bs-btn-hover-bg: rgba(255,255,255,0.15);
+    --bs-btn-hover-border-color: #ffffff;
+    --bs-btn-hover-color: #ffffff;
+    font-family: var(--font-titulo);
+    font-weight: 600;
+}
+
+/* ============================================================
+   PAGINACIÓN — colores AZA
+============================================================ */
+.pagination .page-link {
+    color: var(--aza-verde);
+    border-color: var(--aza-border);
+    border-radius: 0.5rem;
+    margin: 0 2px;
+}
+.pagination .page-link:hover {
+    background-color: var(--aza-verde-claro);
+    border-color: var(--aza-verde);
+    color: var(--aza-verde);
+}
+.pagination .page-item.active .page-link {
+    background-color: var(--aza-verde);
+    border-color: var(--aza-verde);
+    color: #fff;
+}
+
+/* ============================================================
    PAGE HEADER
 ============================================================ */
 .page-header {
@@ -288,16 +330,22 @@
         line-height: 1.7;
     }
 
-    .hero-metrics .col-4 { width: 100%; }
+    /* Métricas: 3 columnas en una fila en mobile */
+    .hero-metrics .col-4 { width: 33.333%; }
 
     .metric-card {
-        text-align: left;
-        padding: 1rem 1.1rem;
+        text-align: center;
+        padding: 0.75rem 0.5rem;
     }
 
-    .metric-card strong { margin-bottom: 0.2rem; }
+    .metric-card strong {
+        font-size: 1.4rem;
+        margin-bottom: 0.15rem;
+    }
 
-    .hero-image { min-height: 320px; }
+    .metric-card span { font-size: 0.62rem; }
+
+    .hero-image { min-height: 260px; }
 
     .highlight-banner { padding: 1.5rem 1.35rem; }
 
@@ -305,4 +353,38 @@
         padding-top: 4rem !important;
         padding-bottom: 4rem !important;
     }
+
+    /* Botones hero: full width en mobile */
+    .hero-actions .btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    /* Tablas: scroll horizontal en mobile */
+    .table-responsive-mobile {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Footer: 1 columna, centrado */
+    .site-footer .col-lg-5,
+    .site-footer .col-sm-6 {
+        text-align: center;
+    }
+
+    /* Logo navbar en mobile más compacto */
+    .navbar-logo-container img { height: 36px; }
+    .logo-text-aza { font-size: 1.2rem; }
+    .logo-text-sindicato { font-size: 0.6rem; }
+}
+
+/* ============================================================
+   RESPONSIVE — extra pequeño (< 375px)
+============================================================ */
+@media (max-width: 374.98px) {
+    .hero-title { font-size: 1.9rem; }
+    .hero-actions .btn { font-size: 0.9rem; padding: 0.7rem 1rem; }
+    .info-card { padding: 1.25rem 1rem; }
+    .navbar-logo-container img { height: 30px; }
+    .logo-text-aza { font-size: 1rem; }
 }

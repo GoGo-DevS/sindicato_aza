@@ -1,37 +1,49 @@
 {% extends "base.html" %}
 
-{% block title %}Comunicados | {{ site_configuration.site_name|default:"Portal Institucional" }}{% endblock %}
+{% block title %}Comunicados | {{ site_configuration.site_name|default:"Sindicato Unificado AZA" }}{% endblock %}
+{% block og_title %}Comunicados — {{ site_configuration.site_name|default:"Sindicato Unificado AZA" }}{% endblock %}
+{% block og_description %}Publicaciones oficiales, avisos y novedades del Sindicato Unificado AZA.{% endblock %}
 
 {% block content %}
 <section class="page-header py-5">
     <div class="container">
-        <span class="section-eyebrow">Informacion institucional</span>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-2">
+                <li class="breadcrumb-item"><a href="{% url 'core:home' %}">Inicio</a></li>
+                <li class="breadcrumb-item active">Comunicados</li>
+            </ol>
+        </nav>
+        <span class="section-eyebrow">Información institucional</span>
         <h1 class="display-6 fw-bold mb-2">Comunicados</h1>
         <p class="lead text-muted mb-0">Publicaciones oficiales, avisos y novedades del sindicato.</p>
     </div>
 </section>
 
-<section class="pb-5">
+<section class="pb-5 pt-4">
     <div class="container">
         <div class="row g-4">
             {% for comunicado in comunicados %}
-                <div class="col-md-6 col-xl-4">
-                    <article class="content-card h-100 position-relative">
+                <div class="col-md-6 col-xl-4 reveal">
+                    <article class="comunicado-card h-100 position-relative">
                         {% if comunicado.imagen %}
-                            <img src="{{ comunicado.imagen.url }}" class="content-card-image" alt="{{ comunicado.titulo }}">
+                            <img src="{{ comunicado.imagen.url }}" class="content-card-image" alt="{{ comunicado.titulo }}" loading="lazy" style="width:100%;object-fit:cover;height:180px;">
+                        {% else %}
+                            <div class="comunicado-card-image">
+                                <i class="bi bi-megaphone"></i>
+                            </div>
                         {% endif %}
-                        <div class="content-card-body">
-                            <div class="d-flex justify-content-between align-items-center gap-2 mb-3">
+                        <div class="comunicado-card-body">
+                            <div class="d-flex justify-content-between align-items-center gap-2 mb-2">
                                 <span class="badge text-bg-light">{{ comunicado.categoria }}</span>
                                 {% if comunicado.destacado %}
-                                    <span class="badge text-bg-warning">Destacado</span>
+                                    <span class="badge" style="background:#2E7D32;color:#fff;">Destacado</span>
                                 {% endif %}
                             </div>
-                            <h2 class="h5">
-                                <a class="stretched-link text-decoration-none" href="{% url 'comunicados:detail' comunicado.slug %}">{{ comunicado.titulo }}</a>
+                            <p class="comunicado-card-fecha">{{ comunicado.fecha_publicacion|date:"d M Y" }}</p>
+                            <h2 class="h5 mb-2">
+                                <a class="stretched-link text-decoration-none" style="color:inherit;" href="{% url 'comunicados:detail' comunicado.slug %}">{{ comunicado.titulo }}</a>
                             </h2>
-                            <p class="text-muted small mb-3">{{ comunicado.fecha_publicacion|date:"d M Y" }}</p>
-                            <p class="text-muted mb-0">{{ comunicado.extracto }}</p>
+                            <p class="text-muted mb-0 small">{{ comunicado.extracto }}</p>
                         </div>
                     </article>
                 </div>
@@ -39,11 +51,39 @@
                 <div class="col-12">
                     <div class="empty-state">
                         <h2 class="h5">No hay comunicados disponibles</h2>
-                        <p class="mb-0 text-muted">Cuando existan publicaciones visibles, apareceran aqui.</p>
+                        <p class="mb-0 text-muted">Cuando existan publicaciones visibles, aparecerán aquí.</p>
                     </div>
                 </div>
             {% endfor %}
         </div>
+
+        {% if is_paginated %}
+        <nav class="mt-5 d-flex justify-content-center" aria-label="Paginación">
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">
+                            <i class="bi bi-chevron-left"></i> Anterior
+                        </a>
+                    </li>
+                {% endif %}
+                {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                        <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                        <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                    {% endif %}
+                {% endfor %}
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">
+                            Siguiente <i class="bi bi-chevron-right"></i>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
     </div>
 </section>
 {% endblock %}

@@ -1,25 +1,33 @@
 {% extends "base.html" %}
 
-{% block title %}Documentos | {{ site_configuration.site_name|default:"Portal Institucional" }}{% endblock %}
+{% block title %}Documentos | {{ site_configuration.site_name|default:"Sindicato Unificado AZA" }}{% endblock %}
+{% block og_title %}Documentos — Sindicato Unificado AZA{% endblock %}
+{% block og_description %}Accede a archivos oficiales, reglamentos y material descargable del Sindicato Unificado AZA.{% endblock %}
 
 {% block content %}
 <section class="page-header py-5">
     <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-2">
+                <li class="breadcrumb-item"><a href="{% url 'core:home' %}">Inicio</a></li>
+                <li class="breadcrumb-item active">Documentos</li>
+            </ol>
+        </nav>
         <span class="section-eyebrow">Repositorio institucional</span>
         <h1 class="display-6 fw-bold mb-2">Documentos</h1>
         <p class="lead text-muted mb-0">Accede a archivos oficiales y material descargable.</p>
     </div>
 </section>
 
-<section class="pb-5">
+<section class="pb-5 pt-4">
     <div class="container">
         <div class="row g-4">
             <div class="col-lg-3">
                 <div class="filter-card">
-                    <h2 class="h6 mb-3">Filtrar por categoria</h2>
+                    <h2 class="h6 mb-3 fw-bold" style="color:var(--aza-verde);">Filtrar por categoría</h2>
                     <div class="list-group">
                         <a href="{% url 'documentos:list' %}" class="list-group-item list-group-item-action {% if not categoria_actual %}active{% endif %}">
-                            Todas
+                            Todas las categorías
                         </a>
                         {% for categoria in categorias %}
                             <a href="{% url 'documentos:list' %}?categoria={{ categoria.slug }}" class="list-group-item list-group-item-action {% if categoria_actual and categoria_actual.pk == categoria.pk %}active{% endif %}">
@@ -32,29 +40,38 @@
             <div class="col-lg-9">
                 <div class="row g-3">
                     {% for documento in documentos %}
-                        <div class="col-md-6">
+                        <div class="col-md-6 reveal">
                             <article class="document-card h-100">
                                 <div class="d-flex justify-content-between align-items-start gap-3 mb-3">
-                                    <div>
-                                        <span class="badge text-bg-light mb-2">{{ documento.categoria }}</span>
-                                        <h2 class="h5 mb-1">{{ documento.titulo }}</h2>
-                                        <p class="small text-muted mb-0">{{ documento.fecha|date:"d M Y" }}</p>
+                                    <div class="d-flex align-items-start gap-3">
+                                        <div class="flex-shrink-0" style="width:44px;height:44px;background:#FFF3E0;border-radius:10px;display:flex;align-items:center;justify-content:center;">
+                                            <i class="bi bi-file-earmark-pdf" style="color:#E65100;font-size:1.4rem;"></i>
+                                        </div>
+                                        <div>
+                                            <span class="badge text-bg-light mb-1">{{ documento.categoria }}</span>
+                                            <h2 class="h5 mb-1">{{ documento.titulo }}</h2>
+                                            <p class="small text-muted mb-0">
+                                                <i class="bi bi-calendar3 me-1"></i>{{ documento.fecha|date:"d M Y" }}
+                                            </p>
+                                        </div>
                                     </div>
                                     {% if documento.destacado %}
-                                        <span class="badge text-bg-warning">Destacado</span>
+                                        <span class="badge flex-shrink-0" style="background:#2E7D32;color:#fff;">Destacado</span>
                                     {% endif %}
                                 </div>
                                 {% if documento.descripcion %}
-                                    <p class="text-muted">{{ documento.descripcion }}</p>
+                                    <p class="text-muted small mb-3">{{ documento.descripcion }}</p>
                                 {% endif %}
-                                <a class="btn btn-outline-primary mt-auto" href="{{ documento.archivo.url }}" target="_blank" rel="noopener">Descargar documento</a>
+                                <a class="btn btn-primary mt-auto" href="{{ documento.archivo.url }}" target="_blank" rel="noopener noreferrer">
+                                    <i class="bi bi-download me-2"></i>Descargar
+                                </a>
                             </article>
                         </div>
                     {% empty %}
                         <div class="col-12">
                             <div class="empty-state">
                                 <h2 class="h5">No se encontraron documentos</h2>
-                                <p class="mb-0 text-muted">Prueba con otra categoria o vuelve mas tarde.</p>
+                                <p class="mb-0 text-muted">Prueba con otra categoría o vuelve más tarde.</p>
                             </div>
                         </div>
                     {% endfor %}

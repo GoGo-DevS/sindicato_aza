@@ -48,17 +48,11 @@
 }
 
 .site-logo {
-    max-height: 48px;
+    height: 46px;
     width: auto;
     object-fit: contain;
-    border-radius: 6px;
-    padding: 4px 8px;
-    background: rgba(46, 125, 50, 0.06);
-    border: 1px solid rgba(46, 125, 50, 0.15);
-    transition: background 0.22s ease;
+    display: block;
 }
-
-.site-logo:hover { background: rgba(46, 125, 50, 0.12); }
 
 .site-brand-text {
     line-height: 1.2;

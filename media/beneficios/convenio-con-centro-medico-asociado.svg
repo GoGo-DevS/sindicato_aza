@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720">
+  <rect width="1200" height="720" fill="#f8fafc"/>
+  <rect x="60" y="60" width="1080" height="600" rx="34" fill="#1F2937" opacity="0.94"/>
+  <rect x="120" y="130" width="220" height="18" rx="9" fill="#ffffff" opacity="0.32"/>
+  <text x="120" y="250" font-size="54" font-family="Arial, sans-serif" fill="#ffffff">Convenio con centro medico a</text>
+  <rect x="120" y="310" width="420" height="18" rx="9" fill="#ffffff" opacity="0.18"/>
+  <rect x="120" y="344" width="360" height="18" rx="9" fill="#ffffff" opacity="0.14"/>
+  <circle cx="940" cy="220" r="90" fill="#EAB308" opacity="0.20"/>
+  <circle cx="1010" cy="470" r="120" fill="#ffffff" opacity="0.08"/>
+</svg>

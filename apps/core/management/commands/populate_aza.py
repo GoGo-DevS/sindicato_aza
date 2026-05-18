@@ -7,17 +7,41 @@ from apps.beneficios.models import Beneficio, CategoriaBeneficio
 from apps.capacitacion.models import RecursoAyuda
 from apps.comunicados.models import CategoriaComunicado, Comunicado
 from apps.documentos.models import CategoriaDocumento, Documento
+from apps.siteconfig.models import SiteConfiguration
 
 
 class Command(BaseCommand):
     help = "Carga datos iniciales para el portal Sindicato AZA."
 
     def handle(self, *args, **options):
+        self.create_siteconfig()
         self.create_comunicados()
         self.create_documentos()
         self.create_beneficios()
         self.create_recursos_ayuda()
         self.stdout.write(self.style.SUCCESS("Datos AZA cargados correctamente."))
+
+    def create_siteconfig(self):
+        config = SiteConfiguration.objects.first()
+        if config is None:
+            config = SiteConfiguration(
+                site_name="Sindicato Unificado AZA",
+                site_tagline="Juntos somos más fuertes",
+                meta_description="Portal oficial del Sindicato Unificado AZA. Accede a comunicados, beneficios, documentos y más.",
+                hero_title="Más fuertes juntos, mejor protegidos siempre",
+                hero_text="Portal oficial del Sindicato Unificado AZA. Comunicados, documentos, beneficios y toda la información relevante para los socios.",
+                contact_email="contacto@sindicatoaza.cl",
+                contact_phone="+56 2 2XXX XXXX",
+                address="Planta AZA, Región Metropolitana, Chile",
+                primary_color="#2E7D32",
+                secondary_color="#263238",
+                accent_color="#1565C0",
+            )
+            config.logo = "siteconfig/header-logo-aza.png"
+            config.save()
+            self.stdout.write("  SiteConfiguration AZA creada.")
+        else:
+            self.stdout.write("  SiteConfiguration ya existe, omitiendo.")
 
     def create_comunicados(self):
         categorias_data = [

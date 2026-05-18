@@ -388,3 +388,72 @@
     .navbar-logo-container img { height: 30px; }
     .logo-text-aza { font-size: 1rem; }
 }
+
+/* ============================================================
+   SECCIÓN QUIÉNES SOMOS
+============================================================ */
+.quienes-valor {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--aza-verde-claro);
+    color: var(--aza-verde);
+    padding: 0.4rem 0.9rem;
+    border-radius: 50px;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.quienes-stat-card {
+    background: #ffffff;
+    border: 1px solid var(--aza-border);
+    border-radius: var(--radius);
+    padding: 1.5rem 1rem;
+    text-align: center;
+    box-shadow: 0 4px 16px rgba(38, 50, 56, 0.05);
+    transition: box-shadow var(--transition), transform var(--transition);
+}
+
+.quienes-stat-card:hover {
+    box-shadow: 0 8px 24px rgba(46, 125, 50, 0.12);
+    transform: translateY(-3px);
+}
+
+/* ============================================================
+   SECCIÓN DIRECTIVA
+============================================================ */
+.directiva-card {
+    background: #ffffff;
+    border: 1px solid var(--aza-border);
+    border-radius: var(--radius);
+    padding: 2rem 1.25rem 1.5rem;
+    box-shadow: 0 4px 16px rgba(38, 50, 56, 0.05);
+    transition: box-shadow var(--transition), transform var(--transition);
+}
+
+.directiva-card:hover {
+    box-shadow: 0 8px 28px rgba(46, 125, 50, 0.13);
+    transform: translateY(-4px);
+}
+
+.directiva-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--aza-verde), var(--aza-azul));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    font-size: 2rem;
+    color: #ffffff;
+}
+
+.directiva-cargo {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--aza-verde);
+    display: block;
+}

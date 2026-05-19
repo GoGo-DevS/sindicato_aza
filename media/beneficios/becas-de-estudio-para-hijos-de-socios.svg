@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#f8fafc"/>
+  <rect x="40" y="40" width="720" height="520" rx="28" fill="#6A1B9A" opacity="0.92"/>
+  <circle cx="660" cy="160" r="120" fill="#ffffff" opacity="0.08"/>
+  <circle cx="120" cy="480" r="90" fill="#ffffff" opacity="0.06"/>
+  <text x="80" y="240" font-family="Arial, sans-serif" font-size="36" fill="#ffffff" font-weight="700">Becas de estudio para hijos de</text>
+  <rect x="80" y="280" width="340" height="6" rx="3" fill="#ffffff" opacity="0.25"/>
+  <rect x="80" y="304" width="260" height="6" rx="3" fill="#ffffff" opacity="0.18"/>
+</svg>

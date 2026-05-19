@@ -79,11 +79,11 @@ body {
     color: var(--aza-verde);
 }
 
-/* Scrollbar personalizado — verde AZA */
-::-webkit-scrollbar             { width: 8px; }
-::-webkit-scrollbar-track       { background: var(--aza-gris-claro); }
-::-webkit-scrollbar-thumb       { background: var(--aza-verde-2); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: var(--aza-verde); }
+/* Scrollbar discreto — sin barra lateral visible en capturas */
+::-webkit-scrollbar             { width: 5px; }
+::-webkit-scrollbar-track       { background: transparent; }
+::-webkit-scrollbar-thumb       { background: rgba(84, 110, 122, 0.30); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(46, 125, 50, 0.55); }
 
 main       { display: block; }
 .site-main { overflow: hidden; }

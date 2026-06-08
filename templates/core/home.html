@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}Inicio | {{ site_configuration.site_name|default:"Sindicato Unificado AZA" }}{% endblock %}
 {% block og_title %}Sindicato Unificado AZA — Portal Oficial{% endblock %}
@@ -251,6 +252,10 @@
                 </div>
             </div>
             <div class="col-lg-6 reveal reveal-delay-1">
+                <img src="{% static 'img/quienes-somos-aza.jpg' %}"
+                     alt="Trabajadores del Sindicato Unificado AZA"
+                     class="img-fluid rounded-4 shadow-sm mb-4 w-100"
+                     style="object-fit:cover;max-height:320px;" loading="lazy">
                 <div class="row g-3">
                     <div class="col-6">
                         <div class="quienes-stat-card">

@@ -2,7 +2,7 @@ services:
   - type: web
     name: sindicato-aza
     env: python
-    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --no-input && python manage.py migrate
+    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --no-input && python manage.py migrate && python manage.py populate_aza && python manage.py cargar_imagenes_demo && python manage.py crear_admin_demo
     startCommand: gunicorn config.wsgi:application
     envVars:
       - key: DEBUG
@@ -11,3 +11,9 @@ services:
         generateValue: true
       - key: ALLOWED_HOSTS
         value: sindicato-aza.onrender.com,sindicatoaza.cl,www.sindicatoaza.cl
+      - key: ADMIN_USERNAME
+        value: gogo
+      - key: ADMIN_EMAIL
+        value: admin@sindicatoaza.cl
+      - key: ADMIN_PASSWORD
+        generateValue: true

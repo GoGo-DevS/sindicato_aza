@@ -27,6 +27,11 @@ ALLOWED_HOSTS = [
     if host.strip()
 ]
 
+# Render inyecta RENDER_EXTERNAL_HOSTNAME automaticamente en cada deploy
+_render_host = os.getenv("RENDER_EXTERNAL_HOSTNAME")
+if _render_host and _render_host not in ALLOWED_HOSTS:
+    ALLOWED_HOSTS.append(_render_host)
+
 if DEBUG:
     if "testserver" not in ALLOWED_HOSTS:
         ALLOWED_HOSTS.append("testserver")

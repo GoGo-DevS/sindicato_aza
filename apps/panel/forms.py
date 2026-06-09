@@ -1,12 +1,37 @@
 from django import forms
+from django.core.exceptions import ValidationError
+from django.core.files.uploadedfile import UploadedFile
 
-from apps.beneficios.models import Beneficio
-from apps.comunicados.models import Comunicado
-from apps.documentos.models import Documento
+from apps.beneficios.models import Beneficio, CategoriaBeneficio
+from apps.comunicados.models import Comunicado, CategoriaComunicado
+from apps.documentos.models import Documento, CategoriaDocumento
 
 LG = "form-control form-control-lg"
 SEL = "form-select form-select-lg"
 FILE = "form-control form-control-lg"
+
+# ── Validacion de archivos subidos ───────────────────────────────────────────
+IMG_EXT = {"jpg", "jpeg", "png", "webp", "gif"}
+DOC_EXT = {"pdf", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "odt", "txt"}
+MAX_IMG = 5 * 1024 * 1024    # 5 MB
+MAX_DOC = 10 * 1024 * 1024   # 10 MB
+
+
+def validar_archivo(f, allowed_ext, max_size):
+    """Valida extension y tamano SOLO de archivos recien subidos."""
+    if not f or not isinstance(f, UploadedFile):
+        return f  # vacio o archivo ya guardado: no re-validar
+    nombre = (getattr(f, "name", "") or "").lower()
+    ext = nombre.rsplit(".", 1)[-1] if "." in nombre else ""
+    if ext not in allowed_ext:
+        raise ValidationError(
+            "Formato no permitido. Permitidos: %s." % ", ".join(sorted(allowed_ext))
+        )
+    if getattr(f, "size", 0) > max_size:
+        raise ValidationError(
+            "El archivo supera el limite de %d MB." % (max_size // (1024 * 1024))
+        )
+    return f
 
 
 class ComunicadoForm(forms.ModelForm):
@@ -46,6 +71,9 @@ class ComunicadoForm(forms.ModelForm):
         if self.instance and self.instance.pk and self.instance.fecha_publicacion:
             self.initial["fecha_publicacion"] = self.instance.fecha_publicacion.strftime("%Y-%m-%dT%H:%M")
 
+    def clean_imagen(self):
+        return validar_archivo(self.cleaned_data.get("imagen"), IMG_EXT, MAX_IMG)
+
 
 class DocumentoForm(forms.ModelForm):
     class Meta:
@@ -75,6 +103,9 @@ class DocumentoForm(forms.ModelForm):
             "archivo":     forms.ClearableFileInput(attrs={"class": FILE}),
             "fecha":       forms.DateInput(attrs={"class": LG, "type": "date"}),
         }
+
+    def clean_archivo(self):
+        return validar_archivo(self.cleaned_data.get("archivo"), DOC_EXT, MAX_DOC)
 
 
 class BeneficioForm(forms.ModelForm):
@@ -107,3 +138,39 @@ class BeneficioForm(forms.ModelForm):
             "imagen":            forms.ClearableFileInput(attrs={"class": FILE}),
             "vigencia":          forms.DateInput(attrs={"class": LG, "type": "date"}),
         }
+
+    def clean_imagen(self):
+        return validar_archivo(self.cleaned_data.get("imagen"), IMG_EXT, MAX_IMG)
+
+
+# ── Formularios de categorias ─────────────────────────────────────────────────
+
+_CAT_LABELS = {"nombre": "Nombre de la categoria", "descripcion": "Descripcion (opcional)", "activo": "Activa"}
+_CAT_WIDGETS = {
+    "nombre": forms.TextInput(attrs={"class": LG, "placeholder": "Ej: Asamblea, Laboral, Bienestar"}),
+    "descripcion": forms.TextInput(attrs={"class": LG, "placeholder": "Breve descripcion"}),
+}
+
+
+class CategoriaComunicadoForm(forms.ModelForm):
+    class Meta:
+        model = CategoriaComunicado
+        fields = ["nombre", "descripcion", "activo"]
+        labels = _CAT_LABELS
+        widgets = _CAT_WIDGETS
+
+
+class CategoriaDocumentoForm(forms.ModelForm):
+    class Meta:
+        model = CategoriaDocumento
+        fields = ["nombre", "descripcion", "activo"]
+        labels = _CAT_LABELS
+        widgets = _CAT_WIDGETS
+
+
+class CategoriaBeneficioForm(forms.ModelForm):
+    class Meta:
+        model = CategoriaBeneficio
+        fields = ["nombre", "descripcion", "activo"]
+        labels = _CAT_LABELS
+        widgets = _CAT_WIDGETS

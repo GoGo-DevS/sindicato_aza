@@ -1,0 +1,94 @@
+{% extends "panel/base_panel.html" %}
+{% block title %}{{ titulo }}{% endblock %}
+
+{% block content %}
+<div style="margin-bottom:1rem;">
+    <a href="{% url volver_url %}" class="btn-p-gris btn-p-sm">
+        <i class="bi bi-arrow-left"></i>Volver
+    </a>
+</div>
+
+<!-- Crear categoria -->
+<div class="p-card">
+    <div class="p-card-header">
+        <h1 class="p-card-title"><i class="bi {{ icono }} me-2" style="color:{{ color }};"></i>{{ titulo }}</h1>
+    </div>
+    <div class="p-card-body">
+        <form method="post" novalidate>
+            {% csrf_token %}
+            {% if form.errors %}
+                <div class="p-alert p-alert-error">
+                    <i class="bi bi-exclamation-circle"></i>
+                    {% for error in form.nombre.errors %}{{ error }}{% endfor %}
+                    {% if not form.nombre.errors %}Revise los campos.{% endif %}
+                </div>
+            {% endif %}
+            <div class="row g-3 align-items-end">
+                <div class="col-md-5">
+                    <label class="p-label" for="{{ form.nombre.id_for_label }}">{{ form.nombre.label }} <span style="color:#C62828;">*</span></label>
+                    {{ form.nombre }}
+                </div>
+                <div class="col-md-5">
+                    <label class="p-label" for="{{ form.descripcion.id_for_label }}">{{ form.descripcion.label }}</label>
+                    {{ form.descripcion }}
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn-p-verde w-100">
+                        <i class="bi bi-plus-lg"></i>Crear
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Listado de categorias -->
+<div class="p-card">
+    <div class="p-card-header">
+        <h2 class="p-card-title" style="font-size:0.95rem;">Categorias existentes</h2>
+    </div>
+    <div style="overflow-x:auto;">
+        {% if categorias %}
+        <table class="p-table">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Descripcion</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cat in categorias %}
+                <tr>
+                    <td><strong>{{ cat.nombre }}</strong></td>
+                    <td style="color:#546E7A;">{{ cat.descripcion|default:"—" }}</td>
+                    <td>
+                        {% if cat.activo %}
+                            <span class="badge-si">Activa</span>
+                        {% else %}
+                            <span class="badge-no">Inactiva</span>
+                        {% endif %}
+                    </td>
+                    <td class="acciones">
+                        <form method="post" action="{% url delete_url cat.pk %}" style="display:inline;"
+                              onsubmit="return confirm('¿Eliminar la categoria \'{{ cat.nombre|escapejs }}\'? Solo se puede si no tiene elementos asociados.');">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-p-rojo btn-p-sm">
+                                <i class="bi bi-trash3"></i>Eliminar
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="p-empty">
+            <i class="bi bi-tags"></i>
+            Aun no hay categorias. Crea la primera con el formulario de arriba.
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

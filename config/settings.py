@@ -133,3 +133,34 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+# ── Seguridad ────────────────────────────────────────────────────────────────
+# Cabeceras y cookies endurecidas. El bloque if not DEBUG aplica solo en
+# produccion (Render) para no romper el desarrollo local por HTTP.
+
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_REFERRER_POLICY = "same-origin"
+X_FRAME_OPTIONS = "DENY"
+SESSION_COOKIE_HTTPONLY = True
+CSRF_COOKIE_HTTPONLY = True
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://sindicatoaza.cl",
+    "https://www.sindicatoaza.cl",
+    "https://sindicato-aza.onrender.com",
+]
+
+# Limites de subida (defensa ante archivos enormes / DoS por upload)
+DATA_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024   # 10 MB
+FILE_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024   # 10 MB
+
+if not DEBUG:
+    # Render termina TLS en su proxy; esta cabecera evita el loop de redireccion.
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_HSTS_SECONDS = 31536000           # 1 ano
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True

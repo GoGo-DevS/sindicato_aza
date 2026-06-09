@@ -34,8 +34,14 @@
 
             <!-- Categoria -->
             <div style="margin-bottom:1.4rem;">
-                <label class="p-label" for="{{ form.categoria.id_for_label }}">{{ form.categoria.label }}</label>
-                {{ form.categoria }}
+                <div style="display:flex;justify-content:space-between;align-items:center;gap:0.5rem;flex-wrap:wrap;">
+                    <label class="p-label" for="{{ form.categoria.id_for_label }}" style="margin-bottom:0;">{{ form.categoria.label }} <span style="color:#C62828;">*</span></label>
+                    <a href="{% url 'panel:categorias_comunicado' %}" class="btn-p-gris btn-p-sm" target="_blank">
+                        <i class="bi bi-plus-lg"></i>Nueva categoria
+                    </a>
+                </div>
+                <div style="margin-top:0.35rem;">{{ form.categoria }}</div>
+                {% if form.categoria.errors %}<div style="color:#C62828;font-size:0.88rem;margin-top:0.3rem;">{{ form.categoria.errors.0 }}</div>{% endif %}
             </div>
 
             <!-- Extracto -->

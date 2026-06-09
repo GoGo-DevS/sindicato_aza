@@ -2,16 +2,20 @@ from functools import wraps
 
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.db.models import ProtectedError
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.text import slugify
 
-from apps.beneficios.models import Beneficio
-from apps.comunicados.models import Comunicado
+from apps.beneficios.models import Beneficio, CategoriaBeneficio
+from apps.comunicados.models import Comunicado, CategoriaComunicado
 from apps.contacto.models import MensajeContacto
-from apps.documentos.models import Documento
+from apps.documentos.models import Documento, CategoriaDocumento
 from apps.siteconfig.models import SiteConfiguration
 
-from .forms import BeneficioForm, ComunicadoForm, DocumentoForm
+from .forms import (
+    BeneficioForm, ComunicadoForm, DocumentoForm,
+    CategoriaBeneficioForm, CategoriaComunicadoForm, CategoriaDocumentoForm,
+)
 
 
 # ── Decorador de acceso ──────────────────────────────────────────────────────
@@ -285,3 +289,89 @@ def mensaje_detail(request, pk):
         messages.success(request, "Mensaje marcado como respondido.")
         return redirect("panel:mensajes_list")
     return render(request, "panel/mensajes/detail.html", {**base_ctx(), "mensaje": mensaje})
+
+
+# ── Categorias (comunicados / documentos / beneficios) ────────────────────────
+
+def _categorias_view(request, *, model, form_class, titulo, icono, color,
+                     volver_url, list_url, delete_url):
+    form = form_class(request.POST or None)
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        messages.success(request, f'Categoria "{form.instance.nombre}" creada correctamente.')
+        return redirect(list_url)
+    return render(request, "panel/categorias.html", {
+        **base_ctx(),
+        "form": form,
+        "categorias": model.objects.all(),
+        "titulo": titulo,
+        "icono": icono,
+        "color": color,
+        "volver_url": volver_url,
+        "list_url": list_url,
+        "delete_url": delete_url,
+    })
+
+
+def _categoria_delete(request, *, model, pk, list_url):
+    obj = get_object_or_404(model, pk=pk)
+    if request.method == "POST":
+        nombre = obj.nombre
+        try:
+            obj.delete()
+            messages.success(request, f'Categoria "{nombre}" eliminada.')
+        except ProtectedError:
+            messages.error(
+                request,
+                f'No se puede eliminar "{nombre}": tiene elementos asociados. '
+                "Reasigne o elimine esos elementos primero."
+            )
+    return redirect(list_url)
+
+
+@staff_required
+def categorias_comunicado(request):
+    return _categorias_view(
+        request, model=CategoriaComunicado, form_class=CategoriaComunicadoForm,
+        titulo="Categorias de comunicados", icono="bi-megaphone", color="#1565C0",
+        volver_url="panel:comunicados_list", list_url="panel:categorias_comunicado",
+        delete_url="panel:categoria_comunicado_delete",
+    )
+
+
+@staff_required
+def categoria_comunicado_delete(request, pk):
+    return _categoria_delete(request, model=CategoriaComunicado, pk=pk,
+                             list_url="panel:categorias_comunicado")
+
+
+@staff_required
+def categorias_documento(request):
+    return _categorias_view(
+        request, model=CategoriaDocumento, form_class=CategoriaDocumentoForm,
+        titulo="Categorias de documentos", icono="bi-file-earmark-pdf", color="#1565C0",
+        volver_url="panel:documentos_list", list_url="panel:categorias_documento",
+        delete_url="panel:categoria_documento_delete",
+    )
+
+
+@staff_required
+def categoria_documento_delete(request, pk):
+    return _categoria_delete(request, model=CategoriaDocumento, pk=pk,
+                             list_url="panel:categorias_documento")
+
+
+@staff_required
+def categorias_beneficio(request):
+    return _categorias_view(
+        request, model=CategoriaBeneficio, form_class=CategoriaBeneficioForm,
+        titulo="Categorias de beneficios", icono="bi-gift", color="#2E7D32",
+        volver_url="panel:beneficios_list", list_url="panel:categorias_beneficio",
+        delete_url="panel:categoria_beneficio_delete",
+    )
+
+
+@staff_required
+def categoria_beneficio_delete(request, pk):
+    return _categoria_delete(request, model=CategoriaBeneficio, pk=pk,
+                             list_url="panel:categorias_beneficio")

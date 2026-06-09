@@ -5,9 +5,14 @@
 <div class="p-card">
     <div class="p-card-header">
         <h1 class="p-card-title"><i class="bi bi-gift me-2" style="color:#FF6F00;"></i>Beneficios</h1>
-        <a href="{% url 'panel:beneficios_create' %}" class="btn-p-verde">
-            <i class="bi bi-plus-lg"></i>Nuevo beneficio
-        </a>
+        <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+            <a href="{% url 'panel:categorias_beneficio' %}" class="btn-p-gris">
+                <i class="bi bi-tags"></i>Categorias
+            </a>
+            <a href="{% url 'panel:beneficios_create' %}" class="btn-p-verde">
+                <i class="bi bi-plus-lg"></i>Nuevo beneficio
+            </a>
+        </div>
     </div>
     <div style="overflow-x:auto;">
         {% if beneficios %}

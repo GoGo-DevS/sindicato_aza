@@ -4,6 +4,19 @@ from .models import MensajeContacto
 
 
 class MensajeContactoForm(forms.ModelForm):
+    # Honeypot anti-spam: campo oculto que los humanos no ven ni completan.
+    # Si llega con contenido, es un bot -> se rechaza el envio.
+    website = forms.CharField(
+        required=False,
+        label="No completar",
+        widget=forms.TextInput(attrs={"tabindex": "-1", "autocomplete": "off"}),
+    )
+
+    def clean_website(self):
+        if self.cleaned_data.get("website"):
+            raise forms.ValidationError("Error de validacion.")
+        return ""
+
     class Meta:
         model = MensajeContacto
         fields = ["nombre", "email", "telefono", "asunto", "mensaje"]

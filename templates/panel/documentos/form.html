@@ -30,14 +30,21 @@
             </div>
 
             <div style="margin-bottom:1.4rem;">
-                <label class="p-label">{{ form.categoria.label }}</label>
-                {{ form.categoria }}
+                <div style="display:flex;justify-content:space-between;align-items:center;gap:0.5rem;flex-wrap:wrap;">
+                    <label class="p-label" style="margin-bottom:0;">{{ form.categoria.label }} <span style="color:#C62828;">*</span></label>
+                    <a href="{% url 'panel:categorias_documento' %}" class="btn-p-gris btn-p-sm" target="_blank">
+                        <i class="bi bi-plus-lg"></i>Nueva categoria
+                    </a>
+                </div>
+                <div style="margin-top:0.35rem;">{{ form.categoria }}</div>
+                {% if form.categoria.errors %}<div style="color:#C62828;font-size:0.88rem;margin-top:0.3rem;">{{ form.categoria.errors.0 }}</div>{% endif %}
             </div>
 
             <div style="margin-bottom:1.4rem;">
                 <label class="p-label">{{ form.archivo.label }} <span style="color:#C62828;">*</span></label>
                 {{ form.archivo }}
                 <div class="p-help">{{ form.archivo.help_text }}</div>
+                {% if form.archivo.errors %}<div style="color:#C62828;font-size:0.88rem;margin-top:0.3rem;">{{ form.archivo.errors.0 }}</div>{% endif %}
                 {% if objeto and objeto.archivo %}
                     <div style="margin-top:0.5rem;font-size:0.88rem;color:#1565C0;">
                         <i class="bi bi-paperclip"></i>

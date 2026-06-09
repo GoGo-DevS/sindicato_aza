@@ -27,8 +27,10 @@ ALLOWED_HOSTS = [
     if host.strip()
 ]
 
-if DEBUG and "testserver" not in ALLOWED_HOSTS:
-    ALLOWED_HOSTS.append("testserver")
+if DEBUG:
+    if "testserver" not in ALLOWED_HOSTS:
+        ALLOWED_HOSTS.append("testserver")
+    ALLOWED_HOSTS.append("*")
 
 
 INSTALLED_APPS = [

@@ -19,11 +19,11 @@ class Command(BaseCommand):
 
     # substring del titulo (en minuscula)  ->  ruta relativa dentro de MEDIA_ROOT
     COMUNICADOS = {
-        "escolaridad": "comunicados/com-escolaridad.jpg",
+        "programa": "comunicados/com-escolaridad.jpg",
         "asamblea": "comunicados/com-asamblea.jpg",
         "convenio": "comunicados/com-convenio.jpg",
-        "procedimientos": "comunicados/com-procedimientos.jpg",
-        "mesa de trabajo": "comunicados/com-mesa-trabajo.jpg",
+        "procesos": "comunicados/com-procedimientos.jpg",
+        "jornada": "comunicados/com-mesa-trabajo.jpg",
     }
     HERO = "siteconfig/hero-aza.jpg"
 
